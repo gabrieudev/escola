@@ -1,6 +1,9 @@
 import { Api } from "../api";
 import express, { Express } from "express";
 import { Route } from "./routes/route";
+import errorHandler from "./middlewares/error-handler.middleware";
+import "express-async-errors";
+import "dotenv/config";
 
 export class ApiExpress implements Api {
     private app: Express;
@@ -9,6 +12,7 @@ export class ApiExpress implements Api {
         this.app = express();
         this.app.use(express.json());
         this.addRoutes(routes);
+        this.app.use(errorHandler);
     }
 
     public static create(routes: Route[]) {
