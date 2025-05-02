@@ -27,6 +27,15 @@ export class Aluno {
         return new Aluno(props);
     }
 
+    toJSON(): AlunoProps {
+        return {
+            id_aluno: this.id_aluno,
+            tx_nome: this.tx_nome,
+            tx_sexo: this.tx_sexo,
+            dt_nascimento: this.dt_nascimento,
+        };
+    }
+
     public get id_aluno() {
         return this.props.id_aluno;
     }
