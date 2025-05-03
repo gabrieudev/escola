@@ -1,8 +1,0 @@
-{
-  "devDependencies": {
-    "@types/node": "^22.15.3"
-  },
-  "dependencies": {
-    "pg": "^8.15.6"
-  }
-}
