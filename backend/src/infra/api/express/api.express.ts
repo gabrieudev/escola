@@ -2,6 +2,7 @@ import { Api } from "../api";
 import express, { Express } from "express";
 import { Route } from "./routes/route";
 import errorHandler from "./middlewares/error-handler.middleware";
+import actuator from "express-actuator";
 import "express-async-errors";
 import "dotenv/config";
 import "reflect-metadata";
@@ -12,6 +13,11 @@ export class ApiExpress implements Api {
     private constructor(routes: Route[]) {
         this.app = express();
         this.app.use(express.json());
+        this.app.use(
+            actuator({
+                basePath: "/actuator",
+            })
+        );
         this.addRoutes(routes);
         this.app.use(errorHandler);
     }
