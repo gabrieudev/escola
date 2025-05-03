@@ -1,8 +1,8 @@
 import { ApiExpress } from "./infra/api/express/api.express";
 
-import { prisma } from "./package/prisma/prisma";
+import { AppDataSource } from "./package/typeorm/data-source";
 
-import { AlunoRepositoryPrisma } from "./infra/repositories/aluno/aluno.repository.prisma";
+import { AlunoRepository } from "./infra/repositories/aluno/aluno.repository";
 
 import { CreateAlunoUsecase } from "./usecases/aluno/create.usecase";
 import { UpdateAlunoUsecase } from "./usecases/aluno/update.usecase";
@@ -18,7 +18,7 @@ import { DeleteAlunoRoute } from "./infra/api/express/routes/aluno/delete.expres
 
 function main() {
     // REPOSITORIES
-    const alunoRepository = AlunoRepositoryPrisma.create(prisma);
+    const alunoRepository = AlunoRepository.create(AppDataSource);
 
     // USECASES
     const createAlunoUsecase = CreateAlunoUsecase.create(alunoRepository);

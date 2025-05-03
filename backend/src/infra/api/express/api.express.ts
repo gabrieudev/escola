@@ -4,6 +4,7 @@ import { Route } from "./routes/route";
 import errorHandler from "./middlewares/error-handler.middleware";
 import "express-async-errors";
 import "dotenv/config";
+import "reflect-metadata";
 
 export class ApiExpress implements Api {
     private app: Express;
@@ -31,7 +32,7 @@ export class ApiExpress implements Api {
 
     public start(port: number) {
         this.app.listen(port, () => {
-            console.log(`Server running on port ${port}`);
+            console.log(`Servidor rodando na porta ${port}`);
             this.listRoutes();
         });
     }
