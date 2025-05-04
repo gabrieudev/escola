@@ -1,6 +1,7 @@
 import { Api } from "../api";
 import express, { Express } from "express";
 import { Route } from "./routes/route";
+import cors from "cors";
 import errorHandler from "./middlewares/error-handler.middleware";
 import actuator from "express-actuator";
 import swaggerUi from "swagger-ui-express";
@@ -8,6 +9,7 @@ import swaggerDocument from "../../../../../docs/swagger/swagger.json";
 import "express-async-errors";
 import "dotenv/config";
 import "reflect-metadata";
+import AppError from "../../../utils/app-error";
 
 export class ApiExpress implements Api {
     private app: Express;
@@ -15,17 +17,42 @@ export class ApiExpress implements Api {
     private constructor(routes: Route[]) {
         this.app = express();
         this.app.use(express.json());
+
+        const allowedOrigins = [
+            "https://escola-rkhq.onrender.com",
+            "http://localhost:3000",
+        ];
+
+        const corsOptions = {
+            origin: (origin: any, callback: any) => {
+                if (allowedOrigins.includes(origin) || !origin) {
+                    callback(null, true);
+                } else {
+                    callback(new AppError("Acesso bloqueado pelo CORS", 403));
+                }
+            },
+            methods: ["GET", "POST", "PUT", "DELETE"],
+            allowedHeaders: ["Content-Type", "Authorization"],
+            credentials: true,
+            optionsSuccessStatus: 200,
+        };
+
+        this.app.use(cors(corsOptions));
+
         this.app.use(
             actuator({
                 basePath: "/actuator",
             })
         );
+
         this.app.use(
             "/docs",
             swaggerUi.serve,
             swaggerUi.setup(swaggerDocument)
         );
+
         this.addRoutes(routes);
+
         this.app.use(errorHandler);
     }
 
