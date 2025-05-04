@@ -11,7 +11,7 @@ import { TipoDisciplina } from "./TipoDisciplina";
 @Entity({ schema: "escola", name: "disciplina" })
 export class Disciplina {
     @PrimaryGeneratedColumn({ name: "id_disciplina" })
-    idDisciplina: number;
+    idDisciplina: number | null;
 
     @ManyToOne(() => Curso)
     @JoinColumn({ name: "id_curso" })
@@ -22,14 +22,14 @@ export class Disciplina {
     tipoDisciplina: TipoDisciplina;
 
     @Column({ name: "tx_sigla", length: 10, unique: true })
-    txSigla: string;
+    sigla: string;
 
     @Column({ name: "tx_descricao", length: 150, unique: true })
-    txDescricao: string;
+    descricao: string;
 
     @Column({ name: "in_periodo" })
-    inPeriodo: number;
+    periodo: number;
 
     @Column({ name: "in_carga_horaria" })
-    inCargaHoraria: number;
+    cargaHoraria: number;
 }

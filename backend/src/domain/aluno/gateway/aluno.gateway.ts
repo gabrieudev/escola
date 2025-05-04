@@ -5,9 +5,9 @@ export interface AlunoGateway {
 
     update(aluno: Aluno): Promise<Aluno | null>;
 
-    delete(id_aluno: number): Promise<boolean>;
+    delete(idAluno: number): Promise<boolean>;
 
-    findById(id_aluno: number): Promise<Aluno | null>;
+    findById(idAluno: number): Promise<Aluno | null>;
 
     findAll(
         nome: string | null,
@@ -15,7 +15,7 @@ export interface AlunoGateway {
         limit: number | null
     ): Promise<{ data: AlunoProps[]; total: number }>;
 
-    existsByNome(tx_nome: string): Promise<boolean>;
+    existsByNome(nome: string): Promise<boolean>;
 
-    existsById(id_aluno: number): Promise<boolean>;
+    existsById(idAluno: number): Promise<boolean>;
 }

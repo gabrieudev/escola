@@ -1,17 +1,17 @@
 import { Titulo } from "../entity/titulo";
 
 export interface TituloGateway {
-    create(titulo: Titulo): Promise<Titulo>;
+    create(titulo: Titulo): Promise<Titulo | null>;
 
-    update(titulo: Titulo, id_titulo: number): Promise<Titulo>;
+    update(titulo: Titulo): Promise<Titulo | null>;
 
-    delete(id_titulo: number): Promise<void>;
+    delete(idTitulo: number): Promise<boolean>;
 
-    findById(id_titulo: number): Promise<Titulo>;
+    findById(idTitulo: number): Promise<Titulo | null>;
 
     findAll(
-        tx_descricao: string | null,
+        descricao: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<Titulo[]>;
+    ): Promise<{ data: Titulo[]; total: number }>;
 }

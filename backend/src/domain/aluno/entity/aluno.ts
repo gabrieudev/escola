@@ -1,26 +1,26 @@
 export type AlunoProps = {
-    id_aluno: number | null;
-    tx_nome: string;
-    tx_sexo: string;
-    dt_nascimento: Date;
+    idAluno: number | null;
+    nome: string;
+    sexo: string;
+    dtNascimento: Date;
 };
 
 export class Aluno {
     private constructor(private props: AlunoProps) {}
 
     static create(
-        id_aluno: number | null,
-        tx_nome: string,
-        tx_sexo: string,
-        dt_nascimento: Date
+        idAluno: number | null,
+        nome: string,
+        sexo: string,
+        dtNascimento: Date
     ) {
-        return new Aluno({ id_aluno, tx_nome, tx_sexo, dt_nascimento });
+        return new Aluno({ idAluno, nome, sexo, dtNascimento });
     }
 
-    public update(tx_nome: string, tx_sexo: string, dt_nascimento: Date) {
-        this.props.tx_nome = tx_nome;
-        this.props.tx_sexo = tx_sexo;
-        this.props.dt_nascimento = dt_nascimento;
+    public update(nome: string, sexo: string, dtNascimento: Date) {
+        this.props.nome = nome;
+        this.props.sexo = sexo;
+        this.props.dtNascimento = dtNascimento;
     }
 
     public with(props: AlunoProps) {
@@ -29,26 +29,26 @@ export class Aluno {
 
     toJSON(): AlunoProps {
         return {
-            id_aluno: this.id_aluno,
-            tx_nome: this.tx_nome,
-            tx_sexo: this.tx_sexo,
-            dt_nascimento: this.dt_nascimento,
+            idAluno: this.idAluno,
+            nome: this.nome,
+            sexo: this.sexo,
+            dtNascimento: this.dtNascimento,
         };
     }
 
-    public get id_aluno() {
-        return this.props.id_aluno;
+    public get idAluno() {
+        return this.props.idAluno;
     }
 
-    public get tx_nome() {
-        return this.props.tx_nome;
+    public get nome() {
+        return this.props.nome;
     }
 
-    public get tx_sexo() {
-        return this.props.tx_sexo;
+    public get sexo() {
+        return this.props.sexo;
     }
 
-    public get dt_nascimento() {
-        return this.props.dt_nascimento;
+    public get dtNascimento() {
+        return this.props.dtNascimento;
     }
 }

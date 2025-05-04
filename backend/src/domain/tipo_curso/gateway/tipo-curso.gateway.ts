@@ -1,17 +1,21 @@
-import { TipoCurso } from "../entity/tipo-curso";
+import { TipoCurso, TipoCursoProps } from "../entity/tipo-curso";
 
 export interface TipoCursoGateway {
-    create(tipoCurso: TipoCurso): Promise<TipoCurso>;
+    create(tipoCurso: TipoCurso): Promise<TipoCurso | null>;
 
-    update(tipoCurso: TipoCurso): Promise<TipoCurso>;
+    update(tipoCurso: TipoCurso): Promise<TipoCurso | null>;
 
-    delete(id_tipo_curso: number): Promise<void>;
+    delete(idTipoCurso: number): Promise<boolean>;
 
     findAll(
-        tx_descricao: string | null,
+        descricao: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<TipoCurso[]>;
+    ): Promise<{ data: TipoCursoProps[]; total: number }>;
 
-    findById(id_tipo_curso: number): Promise<TipoCurso>;
+    findById(idTipoCurso: number): Promise<TipoCurso | null>;
+
+    existsByDescricao(descricao: string): Promise<boolean>;
+
+    existsById(idTipoCurso: number): Promise<boolean>;
 }

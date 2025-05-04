@@ -4,12 +4,13 @@ import {
     UpdateAlunoUsecase,
 } from "../../../../../usecases/aluno/update.usecase";
 import { HttpMethod, Route } from "../route";
+import { alunoSchema } from "../../schemas/aluno.schema";
 
 export type UpdateAlunoResponseDto = {
-    id_aluno: number;
-    tx_nome: string;
-    tx_sexo: string;
-    dt_nascimento: Date;
+    idAluno: number;
+    nome: string;
+    sexo: string;
+    dtNascimento: Date;
 };
 
 export class UpdateAlunoRoute implements Route {
@@ -29,18 +30,19 @@ export class UpdateAlunoRoute implements Route {
 
     public getHandler() {
         return async (request: Request, response: Response) => {
-            const {
-                id_aluno,
-                tx_nome,
-                tx_sexo,
-                dt_nascimento,
-            }: UpdateAlunoInputDto = request.body;
+            alunoSchema.parse({
+                ...request.body,
+                dtNascimento: new Date(request.body.dtNascimento),
+            });
+
+            const { idAluno, nome, sexo, dtNascimento }: UpdateAlunoInputDto =
+                request.body;
 
             const input: UpdateAlunoInputDto = {
-                id_aluno,
-                tx_nome,
-                tx_sexo,
-                dt_nascimento,
+                idAluno,
+                nome,
+                sexo,
+                dtNascimento,
             };
 
             const output: UpdateAlunoResponseDto =
@@ -62,10 +64,10 @@ export class UpdateAlunoRoute implements Route {
 
     private present(output: UpdateAlunoResponseDto): UpdateAlunoResponseDto {
         const response = {
-            id_aluno: output.id_aluno,
-            tx_nome: output.tx_nome,
-            tx_sexo: output.tx_sexo,
-            dt_nascimento: output.dt_nascimento,
+            idAluno: output.idAluno,
+            nome: output.nome,
+            sexo: output.sexo,
+            dtNascimento: output.dtNascimento,
         };
 
         return response;

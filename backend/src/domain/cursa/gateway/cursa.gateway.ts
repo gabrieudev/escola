@@ -1,18 +1,18 @@
 import { Cursa } from "../entity/cursa";
 
 export interface CursaGateway {
-    create(cursa: Cursa): Promise<void>;
+    create(cursa: Cursa): Promise<Cursa | null>;
 
-    update(cursa: Cursa, id_cursa: number): Promise<void>;
+    update(cursa: Cursa): Promise<Cursa | null>;
 
-    delete(id_cursa: number): Promise<void>;
+    delete(idCursa: number): Promise<boolean>;
 
-    findById(id_cursa: number): Promise<Cursa>;
+    findById(idCursa: number): Promise<Cursa | null>;
 
     findAll(
-        id_aluno: number | null,
-        id_disciplina: number | null,
+        idAluno: number | null,
+        idDisciplina: number | null,
         page: number | null,
         limit: number | null
-    ): Promise<Cursa[]>;
+    ): Promise<{ data: Cursa[]; total: number }>;
 }

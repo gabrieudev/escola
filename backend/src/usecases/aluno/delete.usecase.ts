@@ -3,7 +3,7 @@ import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
 export type DeleteAlunoInputDto = {
-    id_aluno: number;
+    idAluno: number;
 };
 
 export type DeleteAlunoOutputDto = {
@@ -20,13 +20,13 @@ export class DeleteAlunoUsecase
     }
 
     async execute({
-        id_aluno,
+        idAluno,
     }: DeleteAlunoInputDto): Promise<DeleteAlunoOutputDto> {
-        if (!(await this.alunoGateway.existsById(id_aluno))) {
+        if (!(await this.alunoGateway.existsById(idAluno))) {
             throw new AppError("Aluno não encontrado.", 404);
         }
 
-        const result = await this.alunoGateway.delete(id_aluno);
+        const result = await this.alunoGateway.delete(idAluno);
 
         if (!result) {
             throw new AppError("Erro ao deletar aluno.", 500);

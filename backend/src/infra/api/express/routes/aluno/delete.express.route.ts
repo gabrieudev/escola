@@ -25,7 +25,7 @@ export class DeleteAlunoRoute implements Route {
             const { id } = request.params;
 
             const input: DeleteAlunoInputDto = {
-                id_aluno: parseInt(id),
+                idAluno: parseInt(id),
             };
 
             const output = await this.deleteAlunoService.execute(input);

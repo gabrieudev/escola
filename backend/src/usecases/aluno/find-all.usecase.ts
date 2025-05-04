@@ -14,8 +14,8 @@ export type FindAllAlunoOutputDto = {
     total: number;
     page: number;
     limit: number;
-    total_pages: number;
-    has_next: boolean;
+    totalPages: number;
+    hasNext: boolean;
 };
 
 export class FindAllAlunoUsecase
@@ -58,15 +58,28 @@ export class FindAllAlunoUsecase
 
         const calculatedPage = paginationActive ? page : 1;
         const calculatedLimit = paginationActive ? limit : total;
-        const totalPages = paginationActive ? Math.ceil(total / limit) : 1;
 
+        return this.presentOutput(
+            alunos,
+            calculatedPage,
+            calculatedLimit,
+            total
+        );
+    }
+
+    private presentOutput(
+        alunos: AlunoProps[],
+        page: number,
+        limit: number,
+        total: number
+    ): FindAllAlunoOutputDto {
         return {
             alunos,
             total,
-            page: calculatedPage,
-            limit: calculatedLimit,
-            total_pages: totalPages,
-            has_next: paginationActive ? calculatedPage < totalPages : false,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit),
+            hasNext: page * limit < total,
         };
     }
 }

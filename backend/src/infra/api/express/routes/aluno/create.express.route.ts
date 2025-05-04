@@ -4,13 +4,13 @@ import {
     CreateAlunoUsecase,
 } from "../../../../../usecases/aluno/create.usecase";
 import { HttpMethod, Route } from "../route";
-import { createAlunoSchema } from "../../schemas/aluno.schema";
+import { alunoSchema } from "../../schemas/aluno.schema";
 
 export type CreateAlunoResponseDto = {
-    id_aluno: number;
-    tx_nome: string;
-    tx_sexo: string;
-    dt_nascimento: Date;
+    idAluno: number;
+    nome: string;
+    sexo: string;
+    dtNascimento: Date;
 };
 
 export class CreateAlunoRoute implements Route {
@@ -30,18 +30,18 @@ export class CreateAlunoRoute implements Route {
 
     public getHandler() {
         return async (request: Request, response: Response) => {
-            createAlunoSchema.parse({
+            alunoSchema.parse({
                 ...request.body,
-                dt_nascimento: new Date(request.body.dt_nascimento),
+                dtNascimento: new Date(request.body.dtNascimento),
             });
 
-            const { tx_nome, tx_sexo, dt_nascimento }: CreateAlunoInputDto =
+            const { nome, sexo, dtNascimento }: CreateAlunoInputDto =
                 request.body;
 
             const input: CreateAlunoInputDto = {
-                tx_nome,
-                tx_sexo,
-                dt_nascimento,
+                nome,
+                sexo,
+                dtNascimento,
             };
 
             const output: CreateAlunoResponseDto =
@@ -63,10 +63,10 @@ export class CreateAlunoRoute implements Route {
 
     private present(output: CreateAlunoResponseDto): CreateAlunoResponseDto {
         const response = {
-            id_aluno: output.id_aluno,
-            tx_nome: output.tx_nome,
-            tx_sexo: output.tx_sexo,
-            dt_nascimento: output.dt_nascimento,
+            idAluno: output.idAluno,
+            nome: output.nome,
+            sexo: output.sexo,
+            dtNascimento: output.dtNascimento,
         };
 
         return response;

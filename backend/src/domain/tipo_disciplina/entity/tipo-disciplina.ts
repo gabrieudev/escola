@@ -1,34 +1,38 @@
 export type TipoDisciplinaProps = {
-    id_tipo_disciplina: number | null;
-    tx_descricao: string;
+    idTipoDisciplina: number | null;
+    descricao: string;
 };
 
 export class TipoDisciplina {
     private constructor(private props: TipoDisciplinaProps) {}
 
-    public static create(
-        id_tipo_disciplina: number | null,
-        tx_descricao: string
-    ) {
+    public static create(idTipoDisciplina: number | null, descricao: string) {
         return new TipoDisciplina({
-            id_tipo_disciplina,
-            tx_descricao,
+            idTipoDisciplina,
+            descricao,
         });
     }
 
-    public update(tx_descricao: string) {
-        this.props.tx_descricao = tx_descricao;
+    public update(descricao: string) {
+        this.props.descricao = descricao;
     }
 
     public static with(props: TipoDisciplinaProps) {
         return new TipoDisciplina(props);
     }
 
-    public get id_tipo_disciplina() {
-        return this.props.id_tipo_disciplina;
+    public toJSON() {
+        return {
+            idTipoDisciplina: this.props.idTipoDisciplina,
+            descricao: this.props.descricao,
+        };
     }
 
-    public get tx_descricao() {
-        return this.props.tx_descricao;
+    public get idTipoDisciplina() {
+        return this.props.idTipoDisciplina;
+    }
+
+    public get descricao() {
+        return this.props.descricao;
     }
 }

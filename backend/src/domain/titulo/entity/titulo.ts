@@ -1,31 +1,38 @@
 export type TituloProps = {
-    id_titulo: number | null;
-    tx_descricao: string;
+    idTitulo: number | null;
+    descricao: string;
 };
 
 export class Titulo {
     private constructor(private props: TituloProps) {}
 
-    public static create(id_titulo: number | null, tx_descricao: string) {
+    public static create(idTitulo: number | null, descricao: string) {
         return new Titulo({
-            id_titulo,
-            tx_descricao,
+            idTitulo,
+            descricao,
         });
     }
 
-    public update(tx_descricao: string) {
-        this.props.tx_descricao = tx_descricao;
+    public update(descricao: string) {
+        this.props.descricao = descricao;
     }
 
     public static with(props: TituloProps) {
         return new Titulo(props);
     }
 
-    public get id_titulo() {
-        return this.props.id_titulo;
+    public toJSON() {
+        return {
+            idTitulo: this.props.idTitulo,
+            descricao: this.props.descricao,
+        };
     }
 
-    public get tx_descricao() {
-        return this.props.tx_descricao;
+    public get idTitulo() {
+        return this.props.idTitulo;
+    }
+
+    public get descricao() {
+        return this.props.descricao;
     }
 }

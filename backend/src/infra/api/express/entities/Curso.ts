@@ -11,7 +11,7 @@ import { TipoCurso } from "./TipoCurso";
 @Entity({ schema: "escola", name: "curso" })
 export class Curso {
     @PrimaryGeneratedColumn({ name: "id_curso" })
-    idCurso: number;
+    idCurso: number | null;
 
     @ManyToOne(() => Instituicao)
     @JoinColumn({ name: "id_instituicao" })
@@ -22,5 +22,5 @@ export class Curso {
     tipoCurso: TipoCurso;
 
     @Column({ name: "tx_descricao", length: 150, unique: true })
-    txDescricao: string;
+    descricao: string;
 }

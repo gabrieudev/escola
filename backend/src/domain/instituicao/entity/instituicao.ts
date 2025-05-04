@@ -1,42 +1,50 @@
 export type InstituicaoProps = {
-    id_instituicao: number | null;
-    tx_descricao: string;
-    tx_sigla: string;
+    idInstituicao: number | null;
+    descricao: string;
+    sigla: string;
 };
 
 export class Instituicao {
     private constructor(private props: InstituicaoProps) {}
 
     public static create(
-        id_instituicao: number | null,
-        tx_descricao: string,
-        tx_sigla: string
+        idInstituicao: number | null,
+        descricao: string,
+        sigla: string
     ) {
         return new Instituicao({
-            id_instituicao,
-            tx_descricao,
-            tx_sigla,
+            idInstituicao,
+            descricao,
+            sigla,
         });
     }
 
-    public update(tx_descricao: string, tx_sigla: string) {
-        this.props.tx_descricao = tx_descricao;
-        this.props.tx_sigla = tx_sigla;
+    public update(descricao: string, sigla: string) {
+        this.props.descricao = descricao;
+        this.props.sigla = sigla;
     }
 
     public static with(props: InstituicaoProps) {
         return new Instituicao(props);
     }
 
-    public get id_instituicao() {
-        return this.props.id_instituicao;
+    public toJSON() {
+        return {
+            idInstituicao: this.props.idInstituicao,
+            descricao: this.props.descricao,
+            sigla: this.props.sigla,
+        };
     }
 
-    public get tx_descricao() {
-        return this.props.tx_descricao;
+    public get idInstituicao() {
+        return this.props.idInstituicao;
     }
 
-    public get tx_sigla() {
-        return this.props.tx_sigla;
+    public get descricao() {
+        return this.props.descricao;
+    }
+
+    public get sigla() {
+        return this.props.sigla;
     }
 }

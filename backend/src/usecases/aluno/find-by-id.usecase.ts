@@ -4,14 +4,14 @@ import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
 export type FindByIdAlunoInputDto = {
-    id_aluno: number;
+    idAluno: number;
 };
 
 export type FindByIdAlunoOutputDto = {
-    id_aluno: number | null;
-    tx_nome: string;
-    tx_sexo: string;
-    dt_nascimento: Date;
+    idAluno: number | null;
+    nome: string;
+    sexo: string;
+    dtNascimento: Date;
 };
 
 export class FindByIdAlunoUsecase
@@ -24,9 +24,9 @@ export class FindByIdAlunoUsecase
     }
 
     async execute({
-        id_aluno,
+        idAluno,
     }: FindByIdAlunoInputDto): Promise<FindByIdAlunoOutputDto> {
-        const aluno = await this.alunoGateway.findById(id_aluno);
+        const aluno = await this.alunoGateway.findById(idAluno);
 
         if (!aluno) {
             throw new AppError("Aluno não encontrado.", 404);
@@ -37,10 +37,10 @@ export class FindByIdAlunoUsecase
 
     private presentOutput(aluno: Aluno): FindByIdAlunoOutputDto {
         const output: FindByIdAlunoOutputDto = {
-            id_aluno: aluno.id_aluno!,
-            tx_nome: aluno.tx_nome,
-            tx_sexo: aluno.tx_sexo,
-            dt_nascimento: aluno.dt_nascimento,
+            idAluno: aluno.idAluno!,
+            nome: aluno.nome,
+            sexo: aluno.sexo,
+            dtNascimento: aluno.dtNascimento,
         };
 
         return output;

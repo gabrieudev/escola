@@ -1,77 +1,92 @@
+import { Curso } from "../../curso/entity/curso";
+import { TipoDisciplina } from "../../tipo_disciplina/entity/tipo-disciplina";
+
 export type DisciplinaProps = {
-    id_disciplina: number | null;
-    id_curso: number;
-    id_tipo_disciplina: number;
-    tx_sigla: string;
-    tx_descricao: string;
-    in_periodo: number;
-    in_carga_horaria: number;
+    idDisciplina: number | null;
+    curso: Curso;
+    tipoDisciplina: TipoDisciplina;
+    sigla: string;
+    descricao: string;
+    periodo: number;
+    cargaHoraria: number;
 };
 
 export class Disciplina {
     private constructor(private props: DisciplinaProps) {}
 
-    public create(
-        id_disciplina: number | null,
-        id_curso: number,
-        id_tipo_disciplina: number,
-        tx_sigla: string,
-        tx_descricao: string,
-        in_periodo: number,
-        in_carga_horaria: number
+    public static create(
+        idDisciplina: number | null,
+        curso: Curso,
+        tipoDisciplina: TipoDisciplina,
+        sigla: string,
+        descricao: string,
+        periodo: number,
+        cargaHoraria: number
     ) {
         return new Disciplina({
-            id_disciplina,
-            id_curso,
-            id_tipo_disciplina,
-            tx_sigla,
-            tx_descricao,
-            in_periodo,
-            in_carga_horaria,
+            idDisciplina,
+            curso,
+            tipoDisciplina,
+            sigla,
+            descricao,
+            periodo,
+            cargaHoraria,
         });
     }
 
     public update(
-        tx_sigla: string,
-        tx_descricao: string,
-        in_periodo: number,
-        in_carga_horaria: number
+        sigla: string,
+        descricao: string,
+        periodo: number,
+        cargaHoraria: number
     ) {
-        this.props.tx_sigla = tx_sigla;
-        this.props.tx_descricao = tx_descricao;
-        this.props.in_periodo = in_periodo;
-        this.props.in_carga_horaria = in_carga_horaria;
+        this.props.sigla = sigla;
+        this.props.descricao = descricao;
+        this.props.periodo = periodo;
+        this.props.cargaHoraria = cargaHoraria;
     }
 
     public static with(props: DisciplinaProps) {
         return new Disciplina(props);
     }
 
-    public get id_disciplina() {
-        return this.props.id_disciplina;
+    public toJSON() {
+        return {
+            idDisciplina: this.props.idDisciplina,
+            curso: this.props.curso,
+            tipoDisciplina: this.props.tipoDisciplina,
+            sigla: this.props.sigla,
+            descricao: this.props.descricao,
+            periodo: this.props.periodo,
+            cargaHoraria: this.props.cargaHoraria,
+        };
     }
 
-    public get id_curso() {
-        return this.props.id_curso;
+    public get idDisciplina() {
+        return this.props.idDisciplina;
     }
 
-    public get id_tipo_disciplina() {
-        return this.props.id_tipo_disciplina;
+    public get curso() {
+        return this.props.curso;
     }
 
-    public get tx_sigla() {
-        return this.props.tx_sigla;
+    public get tipoDisciplina() {
+        return this.props.tipoDisciplina;
     }
 
-    public get tx_descricao() {
-        return this.props.tx_descricao;
+    public get sigla() {
+        return this.props.sigla;
     }
 
-    public get in_periodo() {
-        return this.props.in_periodo;
+    public get descricao() {
+        return this.props.descricao;
     }
 
-    public get in_carga_horaria() {
-        return this.props.in_carga_horaria;
+    public get periodo() {
+        return this.props.periodo;
+    }
+
+    public get cargaHoraria() {
+        return this.props.cargaHoraria;
     }
 }

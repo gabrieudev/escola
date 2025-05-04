@@ -11,8 +11,8 @@ export type FindAllAlunoResponseDto = {
     total: number;
     page: number;
     limit: number;
-    total_pages: number;
-    has_next: boolean;
+    totalPages: number;
+    hasNext: boolean;
 };
 
 export class FindAllAlunoRoute implements Route {
@@ -67,8 +67,8 @@ export class FindAllAlunoRoute implements Route {
             total: output.total,
             page: output.page,
             limit: output.limit,
-            total_pages: output.total_pages,
-            has_next: output.has_next,
+            totalPages: output.totalPages,
+            hasNext: output.hasNext,
         };
 
         return response;

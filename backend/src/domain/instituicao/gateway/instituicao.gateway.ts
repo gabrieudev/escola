@@ -1,20 +1,17 @@
 import { Instituicao } from "../entity/instituicao";
 
 export interface InstituicaoGateway {
-    create(instituicao: Instituicao): Promise<Instituicao>;
+    create(instituicao: Instituicao): Promise<Instituicao | null>;
 
-    update(
-        instituicao: Instituicao,
-        id_instituicao: number
-    ): Promise<Instituicao>;
+    update(instituicao: Instituicao): Promise<Instituicao | null>;
 
-    delete(id_instituicao: number): Promise<void>;
+    delete(idInstituicao: number): Promise<boolean>;
 
-    findById(id_instituicao: number): Promise<Instituicao>;
+    findById(idInstituicao: number): Promise<Instituicao | null>;
 
     findAll(
-        tx_sigla: string | null,
+        sigla: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<Instituicao[]>;
+    ): Promise<{ data: Instituicao[]; total: number }>;
 }

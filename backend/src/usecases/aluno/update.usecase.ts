@@ -4,17 +4,17 @@ import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
 export type UpdateAlunoInputDto = {
-    id_aluno: number;
-    tx_nome: string;
-    tx_sexo: string;
-    dt_nascimento: Date;
+    idAluno: number;
+    nome: string;
+    sexo: string;
+    dtNascimento: Date;
 };
 
 export type UpdateAlunoOutputDto = {
-    id_aluno: number;
-    tx_nome: string;
-    tx_sexo: string;
-    dt_nascimento: Date;
+    idAluno: number;
+    nome: string;
+    sexo: string;
+    dtNascimento: Date;
 };
 
 export class UpdateAlunoUsecase
@@ -27,18 +27,25 @@ export class UpdateAlunoUsecase
     }
 
     public async execute({
-        id_aluno,
-        tx_nome,
-        tx_sexo,
-        dt_nascimento,
+        idAluno,
+        nome,
+        sexo,
+        dtNascimento,
     }: UpdateAlunoInputDto): Promise<UpdateAlunoOutputDto> {
-        const alunoToUpdate = await this.alunoGateway.findById(id_aluno);
+        const alunoToUpdate = await this.alunoGateway.findById(idAluno);
 
         if (!alunoToUpdate) {
             throw new AppError("Aluno não encontrado.", 404);
         }
 
-        alunoToUpdate.update(tx_nome, tx_sexo, dt_nascimento);
+        if (
+            (await this.alunoGateway.existsByNome(nome)) &&
+            nome !== alunoToUpdate.nome
+        ) {
+            throw new AppError("Aluno já cadastrado com esse nome.", 409);
+        }
+
+        alunoToUpdate.update(nome, sexo, dtNascimento);
 
         const updatedAluno = await this.alunoGateway.update(alunoToUpdate);
 
@@ -51,10 +58,10 @@ export class UpdateAlunoUsecase
 
     private presentOutput(aluno: Aluno): UpdateAlunoOutputDto {
         const output: UpdateAlunoOutputDto = {
-            id_aluno: aluno.id_aluno!,
-            tx_nome: aluno.tx_nome,
-            tx_sexo: aluno.tx_sexo,
-            dt_nascimento: aluno.dt_nascimento,
+            idAluno: aluno.idAluno!,
+            nome: aluno.nome,
+            sexo: aluno.sexo,
+            dtNascimento: aluno.dtNascimento,
         };
 
         return output;

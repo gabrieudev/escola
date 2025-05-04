@@ -1,17 +1,17 @@
 import { Professor } from "../entity/professor";
 
 export interface ProfessorGateway {
-    create(professor: Professor): Promise<Professor>;
+    create(professor: Professor): Promise<Professor | null>;
 
-    update(professor: Professor, id_professor: number): Promise<Professor>;
+    update(professor: Professor): Promise<Professor | null>;
 
-    delete(id_professor: number): Promise<void>;
+    delete(idProfessor: number): Promise<boolean>;
 
-    findById(id_professor: number): Promise<Professor>;
+    findById(idProfessor: number): Promise<Professor | null>;
 
     findAll(
         nome: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<Professor[]>;
+    ): Promise<{ data: Professor[]; total: number }>;
 }

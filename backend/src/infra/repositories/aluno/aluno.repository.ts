@@ -14,16 +14,16 @@ export class AlunoRepository implements AlunoGateway {
     public async create(aluno: Aluno): Promise<Aluno | null> {
         try {
             const alunoEntity = new AlunoEntity();
-            alunoEntity.txNome = aluno.tx_nome;
-            alunoEntity.txSexo = aluno.tx_sexo;
-            alunoEntity.dtNascimento = aluno.dt_nascimento;
+            alunoEntity.nome = aluno.nome;
+            alunoEntity.sexo = aluno.sexo;
+            alunoEntity.dtNascimento = aluno.dtNascimento;
 
             const savedAluno = await this.repository.save(alunoEntity);
 
             return Aluno.create(
                 savedAluno.idAluno,
-                savedAluno.txNome,
-                savedAluno.txSexo,
+                savedAluno.nome,
+                savedAluno.sexo,
                 savedAluno.dtNascimento
             );
         } catch (error) {
@@ -34,21 +34,21 @@ export class AlunoRepository implements AlunoGateway {
     public async update(aluno: Aluno): Promise<Aluno | null> {
         try {
             const existingAluno = await this.repository.findOneBy({
-                idAluno: aluno.id_aluno ?? undefined,
+                idAluno: aluno.idAluno ?? undefined,
             });
 
             if (!existingAluno) return null;
 
-            existingAluno.txNome = aluno.tx_nome;
-            existingAluno.txSexo = aluno.tx_sexo;
-            existingAluno.dtNascimento = aluno.dt_nascimento;
+            existingAluno.nome = aluno.nome;
+            existingAluno.sexo = aluno.sexo;
+            existingAluno.dtNascimento = aluno.dtNascimento;
 
             const updatedAluno = await this.repository.save(existingAluno);
 
             return Aluno.create(
                 updatedAluno.idAluno,
-                updatedAluno.txNome,
-                updatedAluno.txSexo,
+                updatedAluno.nome,
+                updatedAluno.sexo,
                 updatedAluno.dtNascimento
             );
         } catch (error) {
@@ -73,7 +73,7 @@ export class AlunoRepository implements AlunoGateway {
         const applyPagination = page !== null && limit !== null;
 
         const [alunosEntities, total] = await this.repository.findAndCount({
-            where: nome ? { txNome: ILike(`%${nome}%`) } : {},
+            where: nome ? { nome: ILike(`%${nome}%`) } : {},
             skip: applyPagination ? (page - 1) * limit : undefined,
             take: applyPagination ? limit : undefined,
             order: { idAluno: "ASC" },
@@ -82,8 +82,8 @@ export class AlunoRepository implements AlunoGateway {
         const alunos = alunosEntities.map((entity) => {
             const aluno = Aluno.create(
                 entity.idAluno,
-                entity.txNome,
-                entity.txSexo,
+                entity.nome,
+                entity.sexo,
                 entity.dtNascimento
             );
             return aluno.toJSON();
@@ -101,15 +101,15 @@ export class AlunoRepository implements AlunoGateway {
 
         return Aluno.create(
             alunoEntity.idAluno,
-            alunoEntity.txNome,
-            alunoEntity.txSexo,
+            alunoEntity.nome,
+            alunoEntity.sexo,
             alunoEntity.dtNascimento
         );
     }
 
-    public async existsByNome(txNome: string): Promise<boolean> {
+    public async existsByNome(nome: string): Promise<boolean> {
         const count = await this.repository.count({
-            where: { txNome },
+            where: { nome },
         });
         return count > 0;
     }

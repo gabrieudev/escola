@@ -1,21 +1,21 @@
 import { Disciplina } from "../entity/disciplina";
 
 export interface DisciplinaGateway {
-    create(disciplina: Disciplina): Promise<Disciplina>;
+    create(disciplina: Disciplina): Promise<Disciplina | null>;
 
-    update(disciplina: Disciplina, id_disciplina: number): Promise<Disciplina>;
+    update(disciplina: Disciplina): Promise<Disciplina | null>;
 
-    delete(id_disciplina: number): Promise<void>;
+    delete(idDisciplina: number): Promise<boolean>;
 
-    findById(id_disciplina: number): Promise<Disciplina>;
+    findById(idDisciplina: number): Promise<Disciplina | null>;
 
     findAll(
-        id_curso: number | null,
-        id_tipo_disciplina: number | null,
-        tx_sigla: string | null,
-        tx_descricao: string | null,
-        in_periodo: number | null,
+        idCurso: number | null,
+        idTipoDisciplina: number | null,
+        sigla: string | null,
+        descricao: string | null,
+        periodo: number | null,
         page: number | null,
         limit: number | null
-    ): Promise<Disciplina[]>;
+    ): Promise<{ data: Disciplina[]; total: number }>;
 }

@@ -1,20 +1,17 @@
 import { TipoDisciplina } from "../entity/tipo-disciplina";
 
 export interface TipoDisciplinaGateway {
-    create(tipoDisciplina: TipoDisciplina): Promise<TipoDisciplina>;
+    create(tipoDisciplina: TipoDisciplina): Promise<TipoDisciplina | null>;
 
-    update(
-        tipoDisciplina: TipoDisciplina,
-        id_tipo_disciplina: number
-    ): Promise<TipoDisciplina>;
+    update(tipoDisciplina: TipoDisciplina): Promise<TipoDisciplina | null>;
 
-    delete(id_tipo_disciplina: number): Promise<void>;
+    delete(idTipoDisciplina: number): Promise<boolean>;
 
     findAll(
-        tx_descricao: string | null,
+        descricao: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<TipoDisciplina[]>;
+    ): Promise<{ data: TipoDisciplina[]; total: number }>;
 
-    findById(id_tipo_disciplina: number): Promise<TipoDisciplina>;
+    findById(idTipoDisciplina: number): Promise<TipoDisciplina | null>;
 }

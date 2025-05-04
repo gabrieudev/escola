@@ -10,24 +10,24 @@ import { Titulo } from "./Titulo";
 @Entity({ schema: "escola", name: "professor" })
 export class Professor {
     @PrimaryGeneratedColumn({ name: "id_professor" })
-    idProfessor: number;
+    idProfessor: number | null;
 
     @ManyToOne(() => Titulo)
     @JoinColumn({ name: "id_titulo" })
     titulo: Titulo;
 
     @Column({ name: "tx_nome", length: 50, unique: true })
-    txNome: string;
+    nome: string;
 
     @Column({ name: "tx_sexo", length: 1, default: "m" })
-    txSexo: "m" | "f";
+    sexo: "m" | "f";
 
     @Column({ name: "tx_estado_civil", length: 1, default: "s" })
-    txEstadoCivil: "s" | "c" | "d";
+    estadoCivil: "s" | "c" | "d";
 
     @Column({ name: "dt_nascimento", type: "date" })
     dtNascimento: Date;
 
     @Column({ name: "tx_telefone", length: 13, unique: true })
-    txTelefone: string;
+    telefone: string;
 }

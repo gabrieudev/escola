@@ -4,16 +4,16 @@ import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
 export type CreateAlunoInputDto = {
-    tx_nome: string;
-    tx_sexo: string;
-    dt_nascimento: Date;
+    nome: string;
+    sexo: string;
+    dtNascimento: Date;
 };
 
 export type CreateAlunoOutputDto = {
-    id_aluno: number;
-    tx_nome: string;
-    tx_sexo: string;
-    dt_nascimento: Date;
+    idAluno: number;
+    nome: string;
+    sexo: string;
+    dtNascimento: Date;
 };
 
 export class CreateAlunoUsecase
@@ -26,13 +26,13 @@ export class CreateAlunoUsecase
     }
 
     public async execute({
-        tx_nome,
-        tx_sexo,
-        dt_nascimento,
+        nome,
+        sexo,
+        dtNascimento,
     }: CreateAlunoInputDto): Promise<CreateAlunoOutputDto> {
-        const aluno = Aluno.create(null, tx_nome, tx_sexo, dt_nascimento);
+        const aluno = Aluno.create(null, nome, sexo, dtNascimento);
 
-        if (await this.alunoGateway.existsByNome(tx_nome)) {
+        if (await this.alunoGateway.existsByNome(nome)) {
             throw new AppError("Aluno já cadastrado com esse nome.", 409);
         }
 
@@ -47,10 +47,10 @@ export class CreateAlunoUsecase
 
     private presentOutput(aluno: Aluno): CreateAlunoOutputDto {
         const output: CreateAlunoOutputDto = {
-            id_aluno: aluno.id_aluno!,
-            tx_nome: aluno.tx_nome,
-            tx_sexo: aluno.tx_sexo,
-            dt_nascimento: aluno.dt_nascimento,
+            idAluno: aluno.idAluno!,
+            nome: aluno.nome,
+            sexo: aluno.sexo,
+            dtNascimento: aluno.dtNascimento,
         };
 
         return output;

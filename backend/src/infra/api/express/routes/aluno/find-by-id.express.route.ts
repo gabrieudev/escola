@@ -6,10 +6,10 @@ import {
 import { HttpMethod, Route } from "../route";
 
 export type FindByIdAlunoResponseDto = {
-    id_aluno: number | null;
-    tx_nome: string;
-    tx_sexo: string;
-    dt_nascimento: Date;
+    idAluno: number | null;
+    nome: string;
+    sexo: string;
+    dtNascimento: Date;
 };
 
 export class FindByIdAlunoRoute implements Route {
@@ -37,7 +37,7 @@ export class FindByIdAlunoRoute implements Route {
             const { id } = request.params;
 
             const input: FindByIdAlunoInputDto = {
-                id_aluno: parseInt(id),
+                idAluno: parseInt(id),
             };
 
             const output: FindByIdAlunoResponseDto =
@@ -59,10 +59,10 @@ export class FindByIdAlunoRoute implements Route {
 
     present(output: FindByIdAlunoResponseDto): FindByIdAlunoResponseDto {
         const response = {
-            id_aluno: output.id_aluno,
-            tx_nome: output.tx_nome,
-            tx_sexo: output.tx_sexo,
-            dt_nascimento: output.dt_nascimento,
+            idAluno: output.idAluno,
+            nome: output.nome,
+            sexo: output.sexo,
+            dtNascimento: output.dtNascimento,
         };
 
         return response;

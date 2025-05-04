@@ -5,16 +5,16 @@ import { Disciplina } from "./Disciplina";
 @Entity({ schema: "escola", name: "cursa" })
 export class Cursa {
     @PrimaryColumn({ name: "id_aluno" })
-    idAluno: number;
+    idAluno: number | null;
 
     @PrimaryColumn({ name: "id_disciplina" })
     idDisciplina: number;
 
     @PrimaryColumn({ name: "in_ano" })
-    inAno: number;
+    ano: number;
 
     @PrimaryColumn({ name: "in_semestre" })
-    inSemestre: number;
+    semestre: number;
 
     @ManyToOne(() => Aluno)
     @JoinColumn({ name: "id_aluno" })
@@ -25,7 +25,7 @@ export class Cursa {
     disciplina: Disciplina;
 
     @Column({ name: "in_faltas" })
-    inFaltas: number;
+    faltas: number;
 
     @Column({
         name: "nm_nota1",
@@ -34,7 +34,7 @@ export class Cursa {
         scale: 2,
         nullable: true,
     })
-    nmNota1: number;
+    nota1: number;
 
     @Column({
         name: "nm_nota2",
@@ -43,7 +43,7 @@ export class Cursa {
         scale: 2,
         nullable: true,
     })
-    nmNota2: number;
+    nota2: number;
 
     @Column({
         name: "nm_nota3",
@@ -52,8 +52,8 @@ export class Cursa {
         scale: 2,
         nullable: true,
     })
-    nmNota3: number;
+    nota3: number;
 
     @Column({ name: "bl_aprovado", default: false })
-    blAprovado: boolean;
+    isAprovado: boolean;
 }
