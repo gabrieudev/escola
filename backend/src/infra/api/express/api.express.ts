@@ -3,6 +3,8 @@ import express, { Express } from "express";
 import { Route } from "./routes/route";
 import errorHandler from "./middlewares/error-handler.middleware";
 import actuator from "express-actuator";
+import swaggerUi from "swagger-ui-express";
+import swaggerDocument from "../../../../../docs/swagger/swagger.json";
 import "express-async-errors";
 import "dotenv/config";
 import "reflect-metadata";
@@ -17,6 +19,11 @@ export class ApiExpress implements Api {
             actuator({
                 basePath: "/actuator",
             })
+        );
+        this.app.use(
+            "/docs",
+            swaggerUi.serve,
+            swaggerUi.setup(swaggerDocument)
         );
         this.addRoutes(routes);
         this.app.use(errorHandler);
