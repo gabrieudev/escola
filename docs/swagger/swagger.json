@@ -164,16 +164,6 @@
             "put": {
                 "tags": ["Alunos"],
                 "summary": "Atualiza um aluno",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -182,6 +172,7 @@
                                 "$ref": "#/components/schemas/Aluno"
                             },
                             "example": {
+                                "idAluno": 1,
                                 "nome": "John Doe",
                                 "sexo": "m",
                                 "dtNascimento": "2000-01-01"
