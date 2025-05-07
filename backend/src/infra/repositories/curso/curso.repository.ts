@@ -34,40 +34,136 @@ export class CursoRepository implements CursoGateway {
     }
 
     public async update(curso: Curso): Promise<Curso | null> {
-        return null;
+        try {
+            const existingCurso = await this.repository.findOneBy({
+                idCurso: curso.idCurso ?? undefined,
+            });
+
+            if (!existingCurso) return null;
+
+            existingCurso.update(curso.descricao);
+
+            const updatedCurso = await this.repository.save(existingCurso);
+
+            return Curso.create(
+                updatedCurso.idCurso,
+                updatedCurso.descricao,
+                updatedCurso.instituicao as Instituicao,
+                updatedCurso.tipoCurso as TipoCurso
+            );
+        } catch (error) {
+            return null;
+        }
     }
 
     public async delete(idCurso: number): Promise<boolean> {
-        return false;
+        try {
+            const result = await this.repository.delete(idCurso);
+            return (result.affected ?? 0) > 0;
+        } catch (error) {
+            return false;
+        }
     }
 
     public async findAll(
-        txDescricao: string | null,
+        descricao: string | null,
+        idInstituicao: number | null,
+        idTipoCurso: number | null,
         page: number | null,
         limit: number | null
     ): Promise<{ data: CursoProps[]; total: number }> {
-        return { data: [], total: 0 };
+        const applyPagination = page !== null && limit !== null;
+
+        const [cursosEntities, total] = await this.repository.findAndCount({
+            where: {
+                descricao: descricao ? ILike(`%${descricao}%`) : undefined,
+                instituicao: idInstituicao
+                    ? { idInstituicao: idInstituicao }
+                    : undefined,
+                tipoCurso: idTipoCurso
+                    ? { idTipoCurso: idTipoCurso }
+                    : undefined,
+            },
+            skip: applyPagination ? (page - 1) * limit : undefined,
+            take: applyPagination ? limit : undefined,
+            order: { idCurso: "ASC" },
+        });
+
+        const cursos = cursosEntities.map((entity) => {
+            const curso = Curso.create(
+                entity.idCurso,
+                entity.descricao,
+                entity.instituicao as Instituicao,
+                entity.tipoCurso as TipoCurso
+            );
+            return curso.toJSON();
+        });
+
+        return { data: cursos, total };
     }
 
     public async findById(idCurso: number): Promise<Curso | null> {
-        return null;
+        try {
+            const cursoEntity = await this.repository.findOneBy({
+                idCurso,
+            });
+
+            if (!cursoEntity) return null;
+
+            return Curso.create(
+                cursoEntity.idCurso,
+                cursoEntity.descricao,
+                cursoEntity.instituicao as Instituicao,
+                cursoEntity.tipoCurso as TipoCurso
+            );
+        } catch (error) {
+            return null;
+        }
     }
 
     public async existsByDescricao(txDescricao: string): Promise<boolean> {
-        return false;
+        try {
+            const result = await this.repository.findOneBy({
+                descricao: txDescricao,
+            });
+            return !!result;
+        } catch (error) {
+            return false;
+        }
     }
 
     public async existsById(idCurso: number): Promise<boolean> {
-        return false;
+        try {
+            const result = await this.repository.findOneBy({
+                idCurso,
+            });
+            return !!result;
+        } catch (error) {
+            return false;
+        }
     }
 
     public async existsByIdInstituicao(
         idInstituicao: number
     ): Promise<boolean> {
-        return false;
+        try {
+            const result = await this.repository.findOneBy({
+                instituicao: { idInstituicao },
+            });
+            return !!result;
+        } catch (error) {
+            return false;
+        }
     }
 
     public async existsByIdTipoCurso(idTipoCurso: number): Promise<boolean> {
-        return false;
+        try {
+            const result = await this.repository.findOneBy({
+                tipoCurso: { idTipoCurso },
+            });
+            return !!result;
+        } catch (error) {
+            return false;
+        }
     }
 }

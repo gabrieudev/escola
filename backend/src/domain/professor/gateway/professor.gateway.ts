@@ -1,4 +1,4 @@
-import { Professor } from "../entity/professor";
+import { Professor, ProfessorProps } from "../entity/professor";
 
 export interface ProfessorGateway {
     create(professor: Professor): Promise<Professor | null>;
@@ -13,5 +13,11 @@ export interface ProfessorGateway {
         nome: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<{ data: Professor[]; total: number }>;
+    ): Promise<{ data: ProfessorProps[]; total: number }>;
+
+    existsByNome(nome: string): Promise<boolean>;
+
+    existsById(idProfessor: number): Promise<boolean>;
+
+    existsByIdTitulo(idTitulo: number): Promise<boolean>;
 }

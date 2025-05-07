@@ -1,4 +1,4 @@
-import { Titulo } from "../entity/titulo";
+import { Titulo, TituloProps } from "../entity/titulo";
 
 export interface TituloGateway {
     create(titulo: Titulo): Promise<Titulo | null>;
@@ -13,5 +13,9 @@ export interface TituloGateway {
         descricao: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<{ data: Titulo[]; total: number }>;
+    ): Promise<{ data: TituloProps[]; total: number }>;
+
+    existsByDescricao(descricao: string): Promise<boolean>;
+
+    existsById(idTitulo: number): Promise<boolean>;
 }

@@ -1,4 +1,4 @@
-import { Disciplina } from "../entity/disciplina";
+import { Disciplina, DisciplinaProps } from "../entity/disciplina";
 
 export interface DisciplinaGateway {
     create(disciplina: Disciplina): Promise<Disciplina | null>;
@@ -17,5 +17,11 @@ export interface DisciplinaGateway {
         periodo: number | null,
         page: number | null,
         limit: number | null
-    ): Promise<{ data: Disciplina[]; total: number }>;
+    ): Promise<{ data: DisciplinaProps[]; total: number }>;
+
+    existsById(idDisciplina: number): Promise<boolean>;
+
+    existsByIdCurso(idCurso: number): Promise<boolean>;
+
+    existsByIdTipoDisciplina(idTipoDisciplina: number): Promise<boolean>;
 }

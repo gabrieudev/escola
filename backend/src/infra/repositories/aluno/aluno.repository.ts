@@ -39,9 +39,7 @@ export class AlunoRepository implements AlunoGateway {
 
             if (!existingAluno) return null;
 
-            existingAluno.nome = aluno.nome;
-            existingAluno.sexo = aluno.sexo;
-            existingAluno.dtNascimento = aluno.dtNascimento;
+            existingAluno.update(aluno.nome, aluno.sexo, aluno.dtNascimento);
 
             const updatedAluno = await this.repository.save(existingAluno);
 

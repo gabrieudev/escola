@@ -1,4 +1,4 @@
-import { Instituicao } from "../entity/instituicao";
+import { Instituicao, InstituicaoProps } from "../entity/instituicao";
 
 export interface InstituicaoGateway {
     create(instituicao: Instituicao): Promise<Instituicao | null>;
@@ -13,5 +13,7 @@ export interface InstituicaoGateway {
         sigla: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<{ data: Instituicao[]; total: number }>;
+    ): Promise<{ data: InstituicaoProps[]; total: number }>;
+
+    existsById(idInstituicao: number): Promise<boolean>;
 }

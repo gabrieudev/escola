@@ -1,4 +1,4 @@
-import { TipoDisciplina } from "../entity/tipo-disciplina";
+import { TipoDisciplina, TipoDisciplinaProps } from "../entity/tipo-disciplina";
 
 export interface TipoDisciplinaGateway {
     create(tipoDisciplina: TipoDisciplina): Promise<TipoDisciplina | null>;
@@ -11,7 +11,11 @@ export interface TipoDisciplinaGateway {
         descricao: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<{ data: TipoDisciplina[]; total: number }>;
+    ): Promise<{ data: TipoDisciplinaProps[]; total: number }>;
 
     findById(idTipoDisciplina: number): Promise<TipoDisciplina | null>;
+
+    existsById(idTipoDisciplina: number): Promise<boolean>;
+
+    existsByDescricao(descricao: string): Promise<boolean>;
 }
