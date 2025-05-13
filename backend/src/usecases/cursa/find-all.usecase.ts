@@ -1,16 +1,21 @@
 import { AlunoProps } from "../../domain/aluno/entity/aluno";
 import { AlunoGateway } from "../../domain/aluno/gateway/aluno.gateway";
+import { Cursa, CursaProps } from "../../domain/cursa/entity/cursa";
+import { CursaGateway } from "../../domain/cursa/gateway/cursa.gateway";
+import { DisciplinaProps } from "../../domain/disciplina/entity/disciplina";
+import { DisciplinaGateway } from "../../domain/disciplina/gateway/disciplina.gateway";
 import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
-export type FindAllAlunoInputDto = {
-    nome: string | null;
+export type FindAllCursaInputDto = {
+    idAluno: number | null;
+    idDisciplina: number | null;
     page: number | null;
     limit: number | null;
 };
 
-export type FindAllAlunoOutputDto = {
-    alunos: AlunoProps[];
+export type FindAllCursaOutputDto = {
+    matriculas: CursaProps[];
     total: number;
     page: number;
     limit: number;
@@ -18,20 +23,21 @@ export type FindAllAlunoOutputDto = {
     hasNext: boolean;
 };
 
-export class FindAllAlunoUsecase
-    implements Usecase<FindAllAlunoInputDto, FindAllAlunoOutputDto>
+export class FindAllCursaUsecase
+    implements Usecase<FindAllCursaInputDto, FindAllCursaOutputDto>
 {
-    constructor(private readonly alunoGateway: AlunoGateway) {}
+    constructor(
+        private cursaGateway: CursaGateway,
+        private alunoGateway: AlunoGateway,
+        private disciplinaGateway: DisciplinaGateway
+    ) {}
 
-    public static create(alunoGateway: AlunoGateway) {
-        return new FindAllAlunoUsecase(alunoGateway);
-    }
-
-    public async execute({
-        nome,
+    async execute({
+        idAluno,
+        idDisciplina,
         page,
         limit,
-    }: FindAllAlunoInputDto): Promise<FindAllAlunoOutputDto> {
+    }: FindAllCursaInputDto): Promise<FindAllCursaOutputDto> {
         if (
             (page !== null && limit === null) ||
             (page === null && limit !== null)
@@ -48,8 +54,9 @@ export class FindAllAlunoUsecase
                 throw new AppError("Parâmetro 'limit' inválido.", 400);
         }
 
-        const { data: alunos, total } = await this.alunoGateway.findAll(
-            nome,
+        const { data: matriculas, total } = await this.cursaGateway.findAll(
+            idAluno,
+            idDisciplina,
             page,
             limit
         );
@@ -60,7 +67,7 @@ export class FindAllAlunoUsecase
         const calculatedLimit = paginationActive ? limit : total;
 
         return this.presentOutput(
-            alunos,
+            matriculas,
             calculatedPage,
             calculatedLimit,
             total
@@ -68,13 +75,13 @@ export class FindAllAlunoUsecase
     }
 
     private presentOutput(
-        alunos: AlunoProps[],
+        matriculas: CursaProps[],
         page: number,
         limit: number,
         total: number
-    ): FindAllAlunoOutputDto {
+    ): FindAllCursaOutputDto {
         return {
-            alunos,
+            matriculas,
             total,
             page,
             limit,

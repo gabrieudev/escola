@@ -32,4 +32,16 @@ export class Disciplina {
 
     @Column({ name: "in_carga_horaria" })
     cargaHoraria: number;
+
+    update(
+        sigla: string,
+        descricao: string,
+        periodo: number,
+        cargaHoraria: number
+    ) {
+        this.sigla = sigla;
+        this.descricao = descricao;
+        this.periodo = periodo;
+        this.cargaHoraria = cargaHoraria;
+    }
 }

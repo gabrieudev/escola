@@ -1,7 +1,8 @@
+import { Aluno } from "../../aluno/entity/aluno";
 import { Disciplina } from "../../disciplina/entity/disciplina";
 
 export type CursaProps = {
-    idAluno: number;
+    aluno: Aluno;
     disciplina: Disciplina;
     ano: number;
     semestre: number;
@@ -16,14 +17,14 @@ export class Cursa {
     constructor(public readonly props: CursaProps) {}
 
     static create(
-        idAluno: number,
+        aluno: Aluno,
         disciplina: Disciplina,
         ano: number,
         semestre: number,
         faltas: number
     ) {
         return new Cursa({
-            idAluno,
+            aluno,
             disciplina,
             ano,
             semestre,
@@ -55,7 +56,7 @@ export class Cursa {
 
     public toJSON() {
         return {
-            idAluno: this.props.idAluno,
+            aluno: this.props.aluno,
             disciplina: this.props.disciplina,
             ano: this.props.ano,
             semestre: this.props.semestre,
@@ -67,8 +68,8 @@ export class Cursa {
         };
     }
 
-    public get idAluno() {
-        return this.props.idAluno;
+    public get aluno() {
+        return this.props.aluno;
     }
 
     public get disciplina() {

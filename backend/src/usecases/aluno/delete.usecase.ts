@@ -13,7 +13,7 @@ export type DeleteAlunoOutputDto = {
 export class DeleteAlunoUsecase
     implements Usecase<DeleteAlunoInputDto, DeleteAlunoOutputDto>
 {
-    constructor(private alunoGateway: AlunoGateway) {}
+    constructor(private readonly alunoGateway: AlunoGateway) {}
 
     public static create(alunoGateway: AlunoGateway) {
         return new DeleteAlunoUsecase(alunoGateway);

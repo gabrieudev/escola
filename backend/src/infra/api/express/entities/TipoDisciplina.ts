@@ -7,4 +7,8 @@ export class TipoDisciplina {
 
     @Column({ name: "tx_descricao", length: 150, unique: true })
     descricao: string;
+
+    update(descricao: string): void {
+        this.descricao = descricao;
+    }
 }

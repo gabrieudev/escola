@@ -109,6 +109,7 @@ export class ProfessorRepository implements ProfessorGateway {
 
     public async findAll(
         nome: string | null,
+        idTitulo: number | null,
         page: number | null,
         limit: number | null
     ): Promise<{ data: ProfessorProps[]; total: number }> {
@@ -116,7 +117,10 @@ export class ProfessorRepository implements ProfessorGateway {
 
         const [professoresEntities, total] = await this.repository.findAndCount(
             {
-                where: nome ? { nome: ILike(`%${nome}%`) } : {},
+                where: {
+                    nome: nome ? ILike(`%${nome}%`) : undefined,
+                    titulo: idTitulo ? { idTitulo: idTitulo } : undefined,
+                },
                 skip: applyPagination ? (page - 1) * limit : undefined,
                 take: applyPagination ? limit : undefined,
                 order: { idProfessor: "ASC" },

@@ -1,16 +1,18 @@
-import { AlunoProps } from "../../domain/aluno/entity/aluno";
-import { AlunoGateway } from "../../domain/aluno/gateway/aluno.gateway";
+import {
+    InstituicaoProps
+} from "../../domain/instituicao/entity/instituicao";
+import { InstituicaoGateway } from "../../domain/instituicao/gateway/instituicao.gateway";
 import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
-export type FindAllAlunoInputDto = {
-    nome: string | null;
+export type FindAllInstituicaoInputDto = {
+    sigla: string | null;
     page: number | null;
     limit: number | null;
 };
 
-export type FindAllAlunoOutputDto = {
-    alunos: AlunoProps[];
+export type FindAllInstituicaoOutputDto = {
+    instituicoes: InstituicaoProps[];
     total: number;
     page: number;
     limit: number;
@@ -18,20 +20,22 @@ export type FindAllAlunoOutputDto = {
     hasNext: boolean;
 };
 
-export class FindAllAlunoUsecase
-    implements Usecase<FindAllAlunoInputDto, FindAllAlunoOutputDto>
+export class FindAllInstituicaoUsecase
+    implements Usecase<FindAllInstituicaoInputDto, FindAllInstituicaoOutputDto>
 {
-    constructor(private readonly alunoGateway: AlunoGateway) {}
+    constructor(private readonly instituicaoGateway: InstituicaoGateway) {}
 
-    public static create(alunoGateway: AlunoGateway) {
-        return new FindAllAlunoUsecase(alunoGateway);
+    static create(
+        instituicaoGateway: InstituicaoGateway
+    ): FindAllInstituicaoUsecase {
+        return new FindAllInstituicaoUsecase(instituicaoGateway);
     }
 
-    public async execute({
-        nome,
+    async execute({
+        sigla,
         page,
         limit,
-    }: FindAllAlunoInputDto): Promise<FindAllAlunoOutputDto> {
+    }: FindAllInstituicaoInputDto): Promise<FindAllInstituicaoOutputDto> {
         if (
             (page !== null && limit === null) ||
             (page === null && limit !== null)
@@ -48,19 +52,20 @@ export class FindAllAlunoUsecase
                 throw new AppError("Parâmetro 'limit' inválido.", 400);
         }
 
-        const { data: alunos, total } = await this.alunoGateway.findAll(
-            nome,
-            page,
-            limit
-        );
-
         const paginationActive = page !== null && limit !== null;
 
         const calculatedPage = paginationActive ? page : 1;
-        const calculatedLimit = paginationActive ? limit : total;
+        const calculatedLimit = paginationActive ? limit : 10;
+
+        const { data: instituicoes, total } =
+            await this.instituicaoGateway.findAll(
+                sigla,
+                calculatedPage,
+                calculatedLimit
+            );
 
         return this.presentOutput(
-            alunos,
+            instituicoes,
             calculatedPage,
             calculatedLimit,
             total
@@ -68,13 +73,13 @@ export class FindAllAlunoUsecase
     }
 
     private presentOutput(
-        alunos: AlunoProps[],
+        instituicoes: InstituicaoProps[],
         page: number,
         limit: number,
         total: number
-    ): FindAllAlunoOutputDto {
+    ): FindAllInstituicaoOutputDto {
         return {
-            alunos,
+            instituicoes,
             total,
             page,
             limit,

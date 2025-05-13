@@ -10,4 +10,9 @@ export class Instituicao {
 
     @Column({ name: "tx_descricao", length: 150, unique: true })
     descricao: string;
+
+    update(descricao: string, sigla: string): void {
+        this.descricao = descricao;
+        this.sigla = sigla;
+    }
 }

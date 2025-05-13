@@ -1,16 +1,16 @@
-import { AlunoProps } from "../../domain/aluno/entity/aluno";
-import { AlunoGateway } from "../../domain/aluno/gateway/aluno.gateway";
+import { TituloProps } from "../../domain/titulo/entity/titulo";
+import { TituloGateway } from "../../domain/titulo/gateway/titulo.gateway";
 import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
-export type FindAllAlunoInputDto = {
-    nome: string | null;
+export type FindAllTituloInputDto = {
+    descricao: string | null;
     page: number | null;
     limit: number | null;
 };
 
-export type FindAllAlunoOutputDto = {
-    alunos: AlunoProps[];
+export type FindAllTituloOutputDto = {
+    titulos: TituloProps[];
     total: number;
     page: number;
     limit: number;
@@ -18,20 +18,16 @@ export type FindAllAlunoOutputDto = {
     hasNext: boolean;
 };
 
-export class FindAllAlunoUsecase
-    implements Usecase<FindAllAlunoInputDto, FindAllAlunoOutputDto>
+export class FindAllTituloUsecase
+    implements Usecase<FindAllTituloInputDto, FindAllTituloOutputDto>
 {
-    constructor(private readonly alunoGateway: AlunoGateway) {}
+    constructor(private tituloGateway: TituloGateway) {}
 
-    public static create(alunoGateway: AlunoGateway) {
-        return new FindAllAlunoUsecase(alunoGateway);
-    }
-
-    public async execute({
-        nome,
+    async execute({
+        descricao,
         page,
         limit,
-    }: FindAllAlunoInputDto): Promise<FindAllAlunoOutputDto> {
+    }: FindAllTituloInputDto): Promise<FindAllTituloOutputDto> {
         if (
             (page !== null && limit === null) ||
             (page === null && limit !== null)
@@ -48,33 +44,33 @@ export class FindAllAlunoUsecase
                 throw new AppError("Parâmetro 'limit' inválido.", 400);
         }
 
-        const { data: alunos, total } = await this.alunoGateway.findAll(
-            nome,
-            page,
-            limit
-        );
-
         const paginationActive = page !== null && limit !== null;
 
         const calculatedPage = paginationActive ? page : 1;
-        const calculatedLimit = paginationActive ? limit : total;
+        const calculatedLimit = paginationActive ? limit : 10;
+
+        const { titulos: titulos, total } = await this.tituloGateway.findAll(
+            descricao,
+            calculatedPage,
+            calculatedLimit
+        );
 
         return this.presentOutput(
-            alunos,
+            titulos,
+            total,
             calculatedPage,
-            calculatedLimit,
-            total
+            calculatedLimit
         );
     }
 
     private presentOutput(
-        alunos: AlunoProps[],
+        titulos: TituloProps[],
+        total: number,
         page: number,
-        limit: number,
-        total: number
-    ): FindAllAlunoOutputDto {
+        limit: number
+    ): FindAllTituloOutputDto {
         return {
-            alunos,
+            titulos: titulos,
             total,
             page,
             limit,

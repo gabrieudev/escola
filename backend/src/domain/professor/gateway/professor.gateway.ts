@@ -11,6 +11,7 @@ export interface ProfessorGateway {
 
     findAll(
         nome: string | null,
+        idTitulo: number | null,
         page: number | null,
         limit: number | null
     ): Promise<{ data: ProfessorProps[]; total: number }>;

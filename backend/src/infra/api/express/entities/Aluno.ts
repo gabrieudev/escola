@@ -13,4 +13,10 @@ export class Aluno {
 
     @Column({ name: "dt_nascimento", type: "date" })
     dtNascimento: Date;
+
+    update(nome: string, sexo: string, dtNascimento: Date): void {
+        this.nome = nome;
+        this.sexo = sexo;
+        this.dtNascimento = dtNascimento;
+    }
 }

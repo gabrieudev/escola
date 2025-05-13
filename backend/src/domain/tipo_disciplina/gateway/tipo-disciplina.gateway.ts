@@ -11,7 +11,7 @@ export interface TipoDisciplinaGateway {
         descricao: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<{ data: TipoDisciplinaProps[]; total: number }>;
+    ): Promise<{ tiposDisciplina: TipoDisciplinaProps[]; total: number }>;
 
     findById(idTipoDisciplina: number): Promise<TipoDisciplina | null>;
 

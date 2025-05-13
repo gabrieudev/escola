@@ -34,7 +34,7 @@ export class Cursa {
         scale: 2,
         nullable: true,
     })
-    nota1: number;
+    nota1: number | null;
 
     @Column({
         name: "nm_nota2",
@@ -43,7 +43,7 @@ export class Cursa {
         scale: 2,
         nullable: true,
     })
-    nota2: number;
+    nota2: number | null;
 
     @Column({
         name: "nm_nota3",
@@ -52,8 +52,26 @@ export class Cursa {
         scale: 2,
         nullable: true,
     })
-    nota3: number;
+    nota3: number | null;
 
     @Column({ name: "bl_aprovado", default: false })
     isAprovado: boolean;
+
+    update(
+        ano: number,
+        semestre: number,
+        faltas: number,
+        nota1: number,
+        nota2: number,
+        nota3: number,
+        isAprovado: boolean
+    ): void {
+        this.ano = ano;
+        this.semestre = semestre;
+        this.faltas = faltas;
+        this.nota1 = nota1;
+        this.nota2 = nota2;
+        this.nota3 = nota3;
+        this.isAprovado = isAprovado;
+    }
 }

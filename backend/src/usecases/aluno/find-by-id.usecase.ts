@@ -8,7 +8,7 @@ export type FindByIdAlunoInputDto = {
 };
 
 export type FindByIdAlunoOutputDto = {
-    idAluno: number | null;
+    idAluno: number;
     nome: string;
     sexo: string;
     dtNascimento: Date;
@@ -17,7 +17,7 @@ export type FindByIdAlunoOutputDto = {
 export class FindByIdAlunoUsecase
     implements Usecase<FindByIdAlunoInputDto, FindByIdAlunoOutputDto>
 {
-    constructor(private alunoGateway: AlunoGateway) {}
+    constructor(private readonly alunoGateway: AlunoGateway) {}
 
     public static create(alunoGateway: AlunoGateway) {
         return new FindByIdAlunoUsecase(alunoGateway);

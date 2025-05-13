@@ -1,16 +1,17 @@
-import { AlunoProps } from "../../domain/aluno/entity/aluno";
-import { AlunoGateway } from "../../domain/aluno/gateway/aluno.gateway";
+import { ProfessorProps } from "../../domain/professor/entity/professor";
+import { ProfessorGateway } from "../../domain/professor/gateway/professor.gateway";
 import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
-export type FindAllAlunoInputDto = {
+export type FindAllProfessorInputDto = {
     nome: string | null;
+    idTitulo: number | null;
     page: number | null;
     limit: number | null;
 };
 
-export type FindAllAlunoOutputDto = {
-    alunos: AlunoProps[];
+export type FindAllProfessorOutputDto = {
+    professores: ProfessorProps[];
     total: number;
     page: number;
     limit: number;
@@ -18,20 +19,17 @@ export type FindAllAlunoOutputDto = {
     hasNext: boolean;
 };
 
-export class FindAllAlunoUsecase
-    implements Usecase<FindAllAlunoInputDto, FindAllAlunoOutputDto>
+export class FindAllProfessorUsecase
+    implements Usecase<FindAllProfessorInputDto, FindAllProfessorOutputDto>
 {
-    constructor(private readonly alunoGateway: AlunoGateway) {}
+    constructor(private readonly professorGateway: ProfessorGateway) {}
 
-    public static create(alunoGateway: AlunoGateway) {
-        return new FindAllAlunoUsecase(alunoGateway);
-    }
-
-    public async execute({
+    async execute({
         nome,
+        idTitulo,
         page,
         limit,
-    }: FindAllAlunoInputDto): Promise<FindAllAlunoOutputDto> {
+    }: FindAllProfessorInputDto): Promise<FindAllProfessorOutputDto> {
         if (
             (page !== null && limit === null) ||
             (page === null && limit !== null)
@@ -48,19 +46,21 @@ export class FindAllAlunoUsecase
                 throw new AppError("Parâmetro 'limit' inválido.", 400);
         }
 
-        const { data: alunos, total } = await this.alunoGateway.findAll(
-            nome,
-            page,
-            limit
-        );
-
         const paginationActive = page !== null && limit !== null;
 
         const calculatedPage = paginationActive ? page : 1;
-        const calculatedLimit = paginationActive ? limit : total;
+        const calculatedLimit = paginationActive ? limit : 10;
+
+        const { data: professores, total } =
+            await this.professorGateway.findAll(
+                nome,
+                idTitulo,
+                calculatedPage,
+                calculatedLimit
+            );
 
         return this.presentOutput(
-            alunos,
+            professores,
             calculatedPage,
             calculatedLimit,
             total
@@ -68,13 +68,13 @@ export class FindAllAlunoUsecase
     }
 
     private presentOutput(
-        alunos: AlunoProps[],
+        professores: ProfessorProps[],
         page: number,
         limit: number,
         total: number
-    ): FindAllAlunoOutputDto {
+    ): FindAllProfessorOutputDto {
         return {
-            alunos,
+            professores: professores,
             total,
             page,
             limit,

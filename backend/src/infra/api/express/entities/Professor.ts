@@ -20,14 +20,28 @@ export class Professor {
     nome: string;
 
     @Column({ name: "tx_sexo", length: 1, default: "m" })
-    sexo: "m" | "f";
+    sexo: string;
 
     @Column({ name: "tx_estado_civil", length: 1, default: "s" })
-    estadoCivil: "s" | "c" | "d";
+    estadoCivil: string;
 
     @Column({ name: "dt_nascimento", type: "date" })
     dtNascimento: Date;
 
     @Column({ name: "tx_telefone", length: 13, unique: true })
     telefone: string;
+
+    update(
+        nome: string,
+        sexo: string,
+        estadoCivil: string,
+        dtNascimento: Date,
+        telefone: string
+    ): void {
+        this.nome = nome;
+        this.sexo = sexo;
+        this.estadoCivil = estadoCivil;
+        this.dtNascimento = dtNascimento;
+        this.telefone = telefone;
+    }
 }

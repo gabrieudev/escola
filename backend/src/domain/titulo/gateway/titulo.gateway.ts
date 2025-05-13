@@ -13,7 +13,7 @@ export interface TituloGateway {
         descricao: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<{ data: TituloProps[]; total: number }>;
+    ): Promise<{ titulos: TituloProps[]; total: number }>;
 
     existsByDescricao(descricao: string): Promise<boolean>;
 

@@ -1,16 +1,16 @@
-import { AlunoProps } from "../../domain/aluno/entity/aluno";
-import { AlunoGateway } from "../../domain/aluno/gateway/aluno.gateway";
+import { TipoDisciplinaProps } from "../../domain/tipo_disciplina/entity/tipo-disciplina";
+import { TipoDisciplinaGateway } from "../../domain/tipo_disciplina/gateway/tipo-disciplina.gateway";
 import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
-export type FindAllAlunoInputDto = {
-    nome: string | null;
+type UpdateTipoDisciplinaInputDto = {
+    descricao: string | null;
     page: number | null;
     limit: number | null;
 };
 
-export type FindAllAlunoOutputDto = {
-    alunos: AlunoProps[];
+type UpdateTipoDisciplinaOutputDto = {
+    tiposDisciplina: TipoDisciplinaProps[];
     total: number;
     page: number;
     limit: number;
@@ -18,20 +18,17 @@ export type FindAllAlunoOutputDto = {
     hasNext: boolean;
 };
 
-export class FindAllAlunoUsecase
-    implements Usecase<FindAllAlunoInputDto, FindAllAlunoOutputDto>
+export class FindAllTipoDisciplinaUsecase
+    implements
+        Usecase<UpdateTipoDisciplinaInputDto, UpdateTipoDisciplinaOutputDto>
 {
-    constructor(private readonly alunoGateway: AlunoGateway) {}
+    constructor(private gateway: TipoDisciplinaGateway) {}
 
-    public static create(alunoGateway: AlunoGateway) {
-        return new FindAllAlunoUsecase(alunoGateway);
-    }
-
-    public async execute({
-        nome,
+    async execute({
+        descricao,
         page,
         limit,
-    }: FindAllAlunoInputDto): Promise<FindAllAlunoOutputDto> {
+    }: UpdateTipoDisciplinaInputDto): Promise<UpdateTipoDisciplinaOutputDto> {
         if (
             (page !== null && limit === null) ||
             (page === null && limit !== null)
@@ -48,19 +45,20 @@ export class FindAllAlunoUsecase
                 throw new AppError("Parâmetro 'limit' inválido.", 400);
         }
 
-        const { data: alunos, total } = await this.alunoGateway.findAll(
-            nome,
-            page,
-            limit
-        );
-
         const paginationActive = page !== null && limit !== null;
 
         const calculatedPage = paginationActive ? page : 1;
-        const calculatedLimit = paginationActive ? limit : total;
+        const calculatedLimit = paginationActive ? limit : 10;
+
+        const { tiposDisciplina: tiposDisciplina, total } =
+            await this.gateway.findAll(
+                descricao,
+                calculatedPage,
+                calculatedLimit
+            );
 
         return this.presentOutput(
-            alunos,
+            tiposDisciplina,
             calculatedPage,
             calculatedLimit,
             total
@@ -68,13 +66,13 @@ export class FindAllAlunoUsecase
     }
 
     private presentOutput(
-        alunos: AlunoProps[],
+        tiposDisciplina: TipoDisciplinaProps[],
         page: number,
         limit: number,
         total: number
-    ): FindAllAlunoOutputDto {
+    ): UpdateTipoDisciplinaOutputDto {
         return {
-            alunos,
+            tiposDisciplina: tiposDisciplina,
             total,
             page,
             limit,
