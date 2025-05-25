@@ -17,13 +17,13 @@ export type UpdateCursoOutputDto = {
     tipoCurso: TipoCursoProps;
 };
 
-export class UpdateCursoUseCase
+export class UpdateCursoUsecase
     implements Usecase<UpdateCursoInputDto, UpdateCursoOutputDto>
 {
     constructor(private readonly cursoGateway: CursoGateway) {}
 
-    static create(cursoGateway: CursoGateway): UpdateCursoUseCase {
-        return new UpdateCursoUseCase(cursoGateway);
+    static create(cursoGateway: CursoGateway): UpdateCursoUsecase {
+        return new UpdateCursoUsecase(cursoGateway);
     }
 
     async execute(input: UpdateCursoInputDto): Promise<UpdateCursoOutputDto> {

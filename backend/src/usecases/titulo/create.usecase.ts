@@ -17,6 +17,10 @@ export class CreateTituloUsecase
 {
     constructor(private readonly tituloGateway: TituloGateway) {}
 
+    static create(tituloGateway: TituloGateway) {
+        return new CreateTituloUsecase(tituloGateway);
+    }
+
     async execute(input: CreateTituloInputDto): Promise<CreateTituloOutputDto> {
         if (await this.tituloGateway.existsByDescricao(input.descricao)) {
             throw new AppError("Titulo já cadastrado", 409);

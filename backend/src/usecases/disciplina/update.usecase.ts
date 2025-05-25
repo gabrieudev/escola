@@ -14,7 +14,7 @@ export type UpdateDisciplinaInputDto = {
 };
 
 export type UpdateDisciplinaOutputDto = {
-    idDisciplina: number | null;
+    idDisciplina: number;
     curso: CursoProps;
     tipoDisciplina: TipoDisciplinaProps;
     sigla: string;
@@ -23,10 +23,14 @@ export type UpdateDisciplinaOutputDto = {
     cargaHoraria: number;
 };
 
-export class UpdateDisciplinaUseCase
+export class UpdateDisciplinaUsecase
     implements Usecase<UpdateDisciplinaInputDto, UpdateDisciplinaOutputDto>
 {
     constructor(private disciplinaGateway: DisciplinaGateway) {}
+
+    static create(disciplinaGateway: DisciplinaGateway) {
+        return new UpdateDisciplinaUsecase(disciplinaGateway);
+    }
 
     async execute(
         input: UpdateDisciplinaInputDto

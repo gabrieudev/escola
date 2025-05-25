@@ -23,6 +23,10 @@ export class FindAllTituloUsecase
 {
     constructor(private tituloGateway: TituloGateway) {}
 
+    static create(tituloGateway: TituloGateway) {
+        return new FindAllTituloUsecase(tituloGateway);
+    }
+
     async execute({
         descricao,
         page,

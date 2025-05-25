@@ -8,8 +8,8 @@ import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
 export type CreateCursaInputDto = {
-    aluno: AlunoProps;
-    disciplina: DisciplinaProps;
+    idAluno: number;
+    idDisciplina: number;
     ano: number;
     semestre: number;
     faltas: number;
@@ -36,6 +36,18 @@ export class CreateCursaUsecase
         private readonly disciplinaGateway: DisciplinaGateway
     ) {}
 
+    static create(
+        cursaGateway: CursaGateway,
+        alunoGateway: AlunoGateway,
+        disciplinaGateway: DisciplinaGateway
+    ) {
+        return new CreateCursaUsecase(
+            cursaGateway,
+            alunoGateway,
+            disciplinaGateway
+        );
+    }
+
     public async create(
         cursaGateway: CursaGateway,
         alunoGateway: AlunoGateway,
@@ -49,9 +61,9 @@ export class CreateCursaUsecase
     }
 
     async execute(input: CreateCursaInputDto): Promise<CreateCursaOutputDto> {
-        const aluno = await this.alunoGateway.findById(input.aluno.idAluno!);
+        const aluno = await this.alunoGateway.findById(input.idAluno!);
         const disciplina = await this.disciplinaGateway.findById(
-            input.disciplina.idDisciplina!
+            input.idDisciplina!
         );
 
         if (!aluno) {
@@ -76,7 +88,11 @@ export class CreateCursaUsecase
             disciplina,
             input.ano,
             input.semestre,
-            input.faltas
+            input.faltas,
+            null,
+            null,
+            null,
+            false
         );
 
         const result = await this.cursaGateway.create(cursa);

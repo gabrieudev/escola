@@ -10,10 +10,14 @@ export type FindDisciplinaByIdOutputDto = {
     data: null;
 };
 
-export class DeleteDisciplinaUseCase
+export class DeleteDisciplinaUsecase
     implements Usecase<FindDisciplinaByIdInputDto, FindDisciplinaByIdOutputDto>
 {
     constructor(private disciplinaGateway: DisciplinaGateway) {}
+
+    static create(disciplinaGateway: DisciplinaGateway) {
+        return new DeleteDisciplinaUsecase(disciplinaGateway);
+    }
 
     async execute(
         input: FindDisciplinaByIdInputDto

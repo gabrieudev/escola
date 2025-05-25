@@ -21,6 +21,12 @@ export class FindByIdTipoDisciplinaUsecase
 {
     constructor(private gateway: TipoDisciplinaGateway) {}
 
+    static create(
+        gateway: TipoDisciplinaGateway
+    ): FindByIdTipoDisciplinaUsecase {
+        return new FindByIdTipoDisciplinaUsecase(gateway);
+    }
+
     async execute(
         input: FindByIdTipoDisciplinaInputDto
     ): Promise<FindByIdTipoDisciplinaOutputDto> {

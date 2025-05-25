@@ -1,10 +1,7 @@
 import { z } from "zod";
-import { updateAlunoSchema } from "../aluno/aluno.schema";
-import { updateCursoSchema } from "../curso/curso.schema";
 
 export const createCursaSchema = z.object({
-    aluno: updateAlunoSchema,
-    curso: updateCursoSchema,
+    idDisciplina: z.number({ message: "O id da disciplina é obrigatório" }),
     ano: z
         .number({ message: "O ano é obrigatório" })
         .min(1, {
@@ -27,7 +24,8 @@ export const createCursaSchema = z.object({
 });
 
 export const updateCursaSchema = z.object({
-    idCursa: z.number({ message: "O id da matrícula é obrigatório" }),
+    idAluno: z.number({ message: "O id do aluno é obrigatório" }),
+    idDisciplina: z.number({ message: "O id da disciplina é obrigatório" }),
     ano: z
         .number({ message: "O ano é obrigatório" })
         .min(1, {
@@ -47,4 +45,20 @@ export const updateCursaSchema = z.object({
     faltas: z.number({ message: "As faltas são obrigatórias" }).min(0, {
         message: "As faltas não podem ser menores que 0",
     }),
+    nota1: z
+        .number()
+        .min(0, { message: "A nota não pode ser menor que 0" })
+        .max(10, { message: "A nota não pode ser maior que 10" })
+        .nullable(),
+    nota2: z
+        .number()
+        .min(0, { message: "A nota não pode ser menor que 0" })
+        .max(10, { message: "A nota não pode ser maior que 10" })
+        .nullable(),
+    nota3: z
+        .number()
+        .min(0, { message: "A nota não pode ser menor que 0" })
+        .max(10, { message: "A nota não pode ser maior que 10" })
+        .nullable(),
+    isAprovado: z.boolean({ message: "O atributo 'isAprovado' é obrigatório" }),
 });

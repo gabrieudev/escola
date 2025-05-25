@@ -23,7 +23,7 @@ export class FindByIdAlunoRoute implements Route {
         findByIdAlunoService: FindByIdAlunoUsecase
     ): FindByIdAlunoRoute {
         return new FindByIdAlunoRoute(
-            "/alunos/:id",
+            "/alunos/:idAluno",
             HttpMethod.GET,
             findByIdAlunoService
         );
@@ -34,10 +34,10 @@ export class FindByIdAlunoRoute implements Route {
         response: Response
     ) => Promise<void> {
         return async (request: Request, response: Response) => {
-            const { id } = request.params;
+            const { idAluno } = request.params;
 
             const input: FindByIdAlunoInputDto = {
-                idAluno: parseInt(id),
+                idAluno: parseInt(idAluno),
             };
 
             const output: FindByIdAlunoResponseDto =

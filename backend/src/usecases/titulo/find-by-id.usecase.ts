@@ -12,10 +12,14 @@ export type FindTituloByIdOutputDto = {
     descricao: string;
 };
 
-export class FindTituloByIdUsecase
+export class FindByIdTituloUsecase
     implements Usecase<FindTituloByIdInputDto, FindTituloByIdOutputDto>
 {
     constructor(private readonly tituloGateway: TituloGateway) {}
+
+    static create(tituloGateway: TituloGateway) {
+        return new FindByIdTituloUsecase(tituloGateway);
+    }
 
     async execute(
         input: FindTituloByIdInputDto

@@ -4,12 +4,12 @@ import { DisciplinaProps } from "../../domain/disciplina/entity/disciplina";
 import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
-type FindCursaByIdInputDto = {
+export type FindByIdCursaInputDto = {
     idAluno: number;
     idDisciplina: number;
 };
 
-type FindCursaByIdOutputDto = {
+export type FindCursaByIdOutputDto = {
     aluno: AlunoProps;
     disciplina: DisciplinaProps;
     ano: number;
@@ -18,15 +18,20 @@ type FindCursaByIdOutputDto = {
     nota1: number | null;
     nota2: number | null;
     nota3: number | null;
+    isAprovado: boolean;
 };
 
-export class FindCursaByIdUsecase
-    implements Usecase<FindCursaByIdInputDto, FindCursaByIdOutputDto>
+export class FindByIdCursaUsecase
+    implements Usecase<FindByIdCursaInputDto, FindCursaByIdOutputDto>
 {
     constructor(private cursaGateway: CursaGateway) {}
 
+    static create(cursaGateway: CursaGateway) {
+        return new FindByIdCursaUsecase(cursaGateway);
+    }
+
     async execute(
-        input: FindCursaByIdInputDto
+        input: FindByIdCursaInputDto
     ): Promise<FindCursaByIdOutputDto> {
         const cursa = await this.cursaGateway.findById(
             input.idAluno,
@@ -52,6 +57,7 @@ export class FindCursaByIdUsecase
             nota1: cursa.nota1,
             nota2: cursa.nota2,
             nota3: cursa.nota3,
+            isAprovado: cursa.isAprovado,
         };
     }
 }

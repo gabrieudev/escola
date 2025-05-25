@@ -73,7 +73,7 @@ export class TituloRepository implements TituloGateway {
         descricao: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<{ data: TituloProps[]; total: number }> {
+    ): Promise<{ titulos: TituloProps[]; total: number }> {
         const applyPagination = page !== null && limit !== null;
 
         const [titulosEntities, total] = await this.repository.findAndCount({
@@ -88,7 +88,7 @@ export class TituloRepository implements TituloGateway {
             return titulo.toJSON();
         });
 
-        return { data: titulos, total };
+        return { titulos: titulos, total };
     }
 
     public async existsByDescricao(descricao: string): Promise<boolean> {

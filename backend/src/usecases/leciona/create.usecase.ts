@@ -8,8 +8,8 @@ import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
 export type CreateLecionaInputDto = {
-    disciplina: DisciplinaProps;
-    professor: ProfessorProps;
+    idDisciplina: number;
+    idProfessor: number;
 };
 
 export type CreateLecionaOutputDto = {
@@ -26,14 +26,26 @@ export class CreateLecionaUsecase
         private readonly professorGateway: ProfessorGateway
     ) {}
 
+    static create(
+        lecionaGateway: LecionaGateway,
+        disciplinaGateway: DisciplinaGateway,
+        professorGateway: ProfessorGateway
+    ) {
+        return new CreateLecionaUsecase(
+            lecionaGateway,
+            disciplinaGateway,
+            professorGateway
+        );
+    }
+
     async execute(
         input: CreateLecionaInputDto
     ): Promise<CreateLecionaOutputDto> {
         const disciplina = await this.disciplinaGateway.findById(
-            input.disciplina.idDisciplina!
+            input.idDisciplina!
         );
         const professor = await this.professorGateway.findById(
-            input.professor.idProfessor!
+            input.idProfessor!
         );
 
         if (!disciplina) {

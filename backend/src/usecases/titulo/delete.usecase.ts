@@ -21,6 +21,13 @@ export class DeleteTituloUsecase
         private readonly professorGateway: ProfessorGateway
     ) {}
 
+    static create(
+        tituloGateway: TituloGateway,
+        professorGateway: ProfessorGateway
+    ) {
+        return new DeleteTituloUsecase(tituloGateway, professorGateway);
+    }
+
     async execute(input: DeleteTituloInputDto): Promise<DeleteTituloOutputDto> {
         const titulo = await this.tituloGateway.findById(input.idTitulo);
 

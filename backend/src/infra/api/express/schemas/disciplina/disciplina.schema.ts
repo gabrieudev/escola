@@ -1,10 +1,9 @@
 import { z } from "zod";
-import { updateCursoSchema } from "../curso/curso.schema";
-import { updateTipoDisciplinaSchema } from "../tipo_disciplina/tipo-disciplina.schema";
 
 export const createDisciplinaSchema = z.object({
-    curso: updateCursoSchema,
-    tipoDisciplina: updateTipoDisciplinaSchema,
+    idTipoDisciplina: z.number({
+        message: "O id do tipo de disciplina é obrigatório",
+    }),
     sigla: z.string({ message: "A sigla é obrigatória" }).nonempty({
         message: "A sigla não pode ser vazia",
     }),
@@ -23,8 +22,6 @@ export const createDisciplinaSchema = z.object({
 
 export const updateDisciplinaSchema = z.object({
     idDisciplina: z.number({ message: "O id da disciplina é obrigatório" }),
-    curso: updateCursoSchema,
-    tipoDisciplina: updateTipoDisciplinaSchema,
     sigla: z.string({ message: "A sigla é obrigatória" }).nonempty({
         message: "A sigla não pode ser vazia",
     }),

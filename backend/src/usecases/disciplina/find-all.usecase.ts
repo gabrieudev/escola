@@ -1,10 +1,5 @@
-import { CursoProps } from "../../domain/curso/entity/curso";
-import {
-    Disciplina,
-    DisciplinaProps,
-} from "../../domain/disciplina/entity/disciplina";
+import { DisciplinaProps } from "../../domain/disciplina/entity/disciplina";
 import { DisciplinaGateway } from "../../domain/disciplina/gateway/disciplina.gateway";
-import { TipoDisciplinaProps } from "../../domain/tipo_disciplina/entity/tipo-disciplina";
 import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
@@ -31,6 +26,10 @@ export class FindAllDisciplinaUsecase
     implements Usecase<FindAllDisciplinaInputDto, FindAllDisciplinaOutputDto>
 {
     constructor(private disciplinaGateway: DisciplinaGateway) {}
+
+    static create(disciplinaGateway: DisciplinaGateway) {
+        return new FindAllDisciplinaUsecase(disciplinaGateway);
+    }
 
     async execute({
         idCurso,

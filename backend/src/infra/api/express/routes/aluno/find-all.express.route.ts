@@ -32,7 +32,10 @@ export class FindAllAlunoRoute implements Route {
         );
     }
 
-    public getHandler() {
+    public getHandler(): (
+        request: Request,
+        response: Response
+    ) => Promise<void> {
         return async (request: Request, response: Response) => {
             const { nome, page, limit } = request.query as {
                 [key: string]: string | null;

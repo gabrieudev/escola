@@ -9,8 +9,8 @@ import { Usecase } from "../usecase";
 
 export type CreateCursoInputDto = {
     descricao: string;
-    instituicao: InstituicaoProps;
-    tipoCurso: TipoCursoProps;
+    idInstituicao: number;
+    idTipoCurso: number;
 };
 
 export type CreateCursoOutputDto = {
@@ -43,10 +43,10 @@ export class CreateCursoUsecase
 
     async execute(input: CreateCursoInputDto): Promise<CreateCursoOutputDto> {
         const instituicao = await this.instituicaoGateway.findById(
-            input.instituicao.idInstituicao!
+            input.idInstituicao!
         );
         const tipoCurso = await this.tipoCursoGateway.findById(
-            input.tipoCurso.idTipoCurso!
+            input.idTipoCurso!
         );
 
         if (!instituicao) {

@@ -16,6 +16,10 @@ export class DeleteCursaUsecase
 {
     constructor(private cursaGateway: CursaGateway) {}
 
+    static create(cursaGateway: CursaGateway) {
+        return new DeleteCursaUsecase(cursaGateway);
+    }
+
     async execute(input: DeleteCursaInputDto): Promise<DeleteCursaOutputDto> {
         if (
             !(await this.cursaGateway.existsByIdAlunoAndIdDisciplina(

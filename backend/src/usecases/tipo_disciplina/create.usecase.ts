@@ -18,6 +18,10 @@ export class CreateTipoDisciplinaUsecase
 {
     constructor(private gateway: TipoDisciplinaGateway) {}
 
+    static create(gateway: TipoDisciplinaGateway): CreateTipoDisciplinaUsecase {
+        return new CreateTipoDisciplinaUsecase(gateway);
+    }
+
     async execute(
         input: CreateTipoDisciplinaInputDto
     ): Promise<CreateTipoDisciplinaOutputDto> {

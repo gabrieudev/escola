@@ -21,7 +21,11 @@ export class Cursa {
         disciplina: Disciplina,
         ano: number,
         semestre: number,
-        faltas: number
+        faltas: number,
+        nota1: number | null,
+        nota2: number | null,
+        nota3: number | null,
+        isAprovado: boolean
     ) {
         return new Cursa({
             aluno,
@@ -29,10 +33,10 @@ export class Cursa {
             ano,
             semestre,
             faltas,
-            nota1: null,
-            nota2: null,
-            nota3: null,
-            isAprovado: false,
+            nota1,
+            nota2,
+            nota3,
+            isAprovado,
         });
     }
 

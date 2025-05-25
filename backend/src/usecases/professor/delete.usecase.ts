@@ -18,6 +18,10 @@ export class DeleteProfessorUsecase
 {
     constructor(private readonly professorGateway: ProfessorGateway) {}
 
+    static create(professorGateway: ProfessorGateway) {
+        return new DeleteProfessorUsecase(professorGateway);
+    }
+
     async execute(
         input: DeleteProfessorInputDto
     ): Promise<DeleteProfessorOutputDto> {

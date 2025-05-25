@@ -28,6 +28,10 @@ export class UpdateProfessorUsecase
 {
     constructor(private professorGateway: ProfessorGateway) {}
 
+    static create(professorGateway: ProfessorGateway) {
+        return new UpdateProfessorUsecase(professorGateway);
+    }
+
     async execute(
         input: UpdateProfessorInputDto
     ): Promise<UpdateProfessorOutputDto> {

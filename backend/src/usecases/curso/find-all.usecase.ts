@@ -25,6 +25,10 @@ export class FindAllCursoUsecase
 {
     constructor(private cursoGateway: CursoGateway) {}
 
+    static create(cursoGateway: CursoGateway): FindAllCursoUsecase {
+        return new FindAllCursoUsecase(cursoGateway);
+    }
+
     async execute({
         descricao,
         idInstituicao,

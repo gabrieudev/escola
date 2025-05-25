@@ -20,6 +20,16 @@ export class DeleteTipoDisciplinaUsecase
         private readonly disciplinaGateway: DisciplinaGateway
     ) {}
 
+    static create(
+        tipoDisciplinaGateway: TipoDisciplinaGateway,
+        disciplinaGateway: DisciplinaGateway
+    ) {
+        return new DeleteTipoDisciplinaUsecase(
+            tipoDisciplinaGateway,
+            disciplinaGateway
+        );
+    }
+
     async execute(
         input: DeleteTipoDisciplinaInputDto
     ): Promise<DeleteTipoDisciplinaOutputDto> {

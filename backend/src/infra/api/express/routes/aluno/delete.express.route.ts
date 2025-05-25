@@ -14,18 +14,18 @@ export class DeleteAlunoRoute implements Route {
 
     static create(deleteAlunoService: DeleteAlunoUsecase): DeleteAlunoRoute {
         return new DeleteAlunoRoute(
-            "/alunos/:id",
-            "delete",
+            "/alunos/:idAluno",
+            HttpMethod.DELETE,
             deleteAlunoService
         );
     }
 
     getHandler(): (request: Request, response: Response) => Promise<void> {
         return async (request: Request, response: Response) => {
-            const { id } = request.params;
+            const { idAluno } = request.params;
 
             const input: DeleteAlunoInputDto = {
-                idAluno: parseInt(id),
+                idAluno: parseInt(idAluno),
             };
 
             const output = await this.deleteAlunoService.execute(input);

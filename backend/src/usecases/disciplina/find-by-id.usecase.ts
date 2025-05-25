@@ -19,10 +19,14 @@ export type FindDisciplinaByIdOutputDto = {
     cargaHoraria: number;
 };
 
-export class FindDisciplinaByIdUseCase
+export class FindByIdDisciplinaUseCase
     implements Usecase<FindDisciplinaByIdInputDto, FindDisciplinaByIdOutputDto>
 {
     constructor(private disciplinaGateway: DisciplinaGateway) {}
+
+    static create(disciplinaGateway: DisciplinaGateway) {
+        return new FindByIdDisciplinaUseCase(disciplinaGateway);
+    }
 
     async execute(
         input: FindDisciplinaByIdInputDto

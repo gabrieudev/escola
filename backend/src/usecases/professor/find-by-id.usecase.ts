@@ -18,10 +18,14 @@ export type FindProfessorByIdOutputDto = {
     telefone: string;
 };
 
-export class FindProfessorByIdUsecase
+export class FindByIdProfessorUsecase
     implements Usecase<FindProfessorByIdInputDto, FindProfessorByIdOutputDto>
 {
     constructor(private readonly professorGateway: ProfessorGateway) {}
+
+    static create(professorGateway: ProfessorGateway) {
+        return new FindByIdProfessorUsecase(professorGateway);
+    }
 
     async execute(
         input: FindProfessorByIdInputDto

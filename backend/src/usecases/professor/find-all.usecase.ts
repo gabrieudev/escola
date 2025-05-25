@@ -24,6 +24,10 @@ export class FindAllProfessorUsecase
 {
     constructor(private readonly professorGateway: ProfessorGateway) {}
 
+    static create(professorGateway: ProfessorGateway) {
+        return new FindAllProfessorUsecase(professorGateway);
+    }
+
     async execute({
         nome,
         idTitulo,

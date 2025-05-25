@@ -16,10 +16,14 @@ export type FindByIdCursoOutputDto = {
     tipoCurso: TipoCursoProps;
 };
 
-export class FindCursoByIdUsecase
+export class FindByIdCursoUsecase
     implements Usecase<FindByIdCursoInputDto, FindByIdCursoOutputDto>
 {
     constructor(private cursoGateway: CursoGateway) {}
+
+    static create(cursoGateway: CursoGateway): FindByIdCursoUsecase {
+        return new FindByIdCursoUsecase(cursoGateway);
+    }
 
     async execute(
         input: FindByIdCursoInputDto

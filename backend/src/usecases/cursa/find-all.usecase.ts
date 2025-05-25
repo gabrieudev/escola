@@ -1,8 +1,6 @@
-import { AlunoProps } from "../../domain/aluno/entity/aluno";
 import { AlunoGateway } from "../../domain/aluno/gateway/aluno.gateway";
-import { Cursa, CursaProps } from "../../domain/cursa/entity/cursa";
+import { CursaProps } from "../../domain/cursa/entity/cursa";
 import { CursaGateway } from "../../domain/cursa/gateway/cursa.gateway";
-import { DisciplinaProps } from "../../domain/disciplina/entity/disciplina";
 import { DisciplinaGateway } from "../../domain/disciplina/gateway/disciplina.gateway";
 import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
@@ -26,11 +24,11 @@ export type FindAllCursaOutputDto = {
 export class FindAllCursaUsecase
     implements Usecase<FindAllCursaInputDto, FindAllCursaOutputDto>
 {
-    constructor(
-        private cursaGateway: CursaGateway,
-        private alunoGateway: AlunoGateway,
-        private disciplinaGateway: DisciplinaGateway
-    ) {}
+    constructor(private cursaGateway: CursaGateway) {}
+
+    static create(cursaGateway: CursaGateway) {
+        return new FindAllCursaUsecase(cursaGateway);
+    }
 
     async execute({
         idAluno,

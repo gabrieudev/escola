@@ -6,7 +6,7 @@ import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
 export type CreateProfessorInputDto = {
-    titulo: TituloProps;
+    idTitulo: number;
     nome: string;
     sexo: string;
     estadoCivil: string;
@@ -32,6 +32,13 @@ export class CreateProfessorUsecase
         private readonly tituloGateway: TituloGateway
     ) {}
 
+    static create(
+        professorGateway: ProfessorGateway,
+        tituloGateway: TituloGateway
+    ) {
+        return new CreateProfessorUsecase(professorGateway, tituloGateway);
+    }
+
     async execute(
         input: CreateProfessorInputDto
     ): Promise<CreateProfessorOutputDto> {
@@ -39,9 +46,7 @@ export class CreateProfessorUsecase
             throw new AppError("Professor já cadastrado", 409);
         }
 
-        const titulo = await this.tituloGateway.findById(
-            input.titulo.idTitulo!
-        );
+        const titulo = await this.tituloGateway.findById(input.idTitulo!);
 
         if (!titulo) {
             throw new AppError("Titulo não encontrado", 404);

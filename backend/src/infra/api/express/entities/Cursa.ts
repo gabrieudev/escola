@@ -61,9 +61,9 @@ export class Cursa {
         ano: number,
         semestre: number,
         faltas: number,
-        nota1: number,
-        nota2: number,
-        nota3: number,
+        nota1: number | null,
+        nota2: number | null,
+        nota3: number | null,
         isAprovado: boolean
     ): void {
         this.ano = ano;

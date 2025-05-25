@@ -3,13 +3,13 @@ import { TipoDisciplinaGateway } from "../../domain/tipo_disciplina/gateway/tipo
 import AppError from "../../utils/app-error";
 import { Usecase } from "../usecase";
 
-type UpdateTipoDisciplinaInputDto = {
+export type FindAllTipoDisciplinaInputDto = {
     descricao: string | null;
     page: number | null;
     limit: number | null;
 };
 
-type UpdateTipoDisciplinaOutputDto = {
+export type FindAllTipoDisciplinaOutputDto = {
     tiposDisciplina: TipoDisciplinaProps[];
     total: number;
     page: number;
@@ -20,15 +20,21 @@ type UpdateTipoDisciplinaOutputDto = {
 
 export class FindAllTipoDisciplinaUsecase
     implements
-        Usecase<UpdateTipoDisciplinaInputDto, UpdateTipoDisciplinaOutputDto>
+        Usecase<FindAllTipoDisciplinaInputDto, FindAllTipoDisciplinaOutputDto>
 {
     constructor(private gateway: TipoDisciplinaGateway) {}
+
+    static create(
+        gateway: TipoDisciplinaGateway
+    ): FindAllTipoDisciplinaUsecase {
+        return new FindAllTipoDisciplinaUsecase(gateway);
+    }
 
     async execute({
         descricao,
         page,
         limit,
-    }: UpdateTipoDisciplinaInputDto): Promise<UpdateTipoDisciplinaOutputDto> {
+    }: FindAllTipoDisciplinaInputDto): Promise<FindAllTipoDisciplinaOutputDto> {
         if (
             (page !== null && limit === null) ||
             (page === null && limit !== null)
@@ -70,7 +76,7 @@ export class FindAllTipoDisciplinaUsecase
         page: number,
         limit: number,
         total: number
-    ): UpdateTipoDisciplinaOutputDto {
+    ): FindAllTipoDisciplinaOutputDto {
         return {
             tiposDisciplina: tiposDisciplina,
             total,

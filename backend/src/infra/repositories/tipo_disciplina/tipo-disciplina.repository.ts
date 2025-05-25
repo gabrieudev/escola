@@ -78,7 +78,7 @@ export class TipoDisciplinaRepository implements TipoDisciplinaGateway {
         descricao: string | null,
         page: number | null,
         limit: number | null
-    ): Promise<{ data: TipoDisciplinaProps[]; total: number }> {
+    ): Promise<{ tiposDisciplina: TipoDisciplinaProps[]; total: number }> {
         const applyPagination = page !== null && limit !== null;
 
         const [tiposDisciplinasEntities, total] =
@@ -97,7 +97,7 @@ export class TipoDisciplinaRepository implements TipoDisciplinaGateway {
             return tipoDisciplina.toJSON();
         });
 
-        return { data: tiposDisciplinas, total };
+        return { tiposDisciplina: tiposDisciplinas, total };
     }
 
     public async findById(

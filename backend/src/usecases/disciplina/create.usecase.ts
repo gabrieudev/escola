@@ -11,8 +11,8 @@ import { CursoGateway } from "../../domain/curso/gateway/curso.gateway";
 import { TipoDisciplinaGateway } from "../../domain/tipo_disciplina/gateway/tipo-disciplina.gateway";
 
 export type CreateDisciplinaInputDto = {
-    curso: CursoProps;
-    tipoDisciplina: TipoDisciplinaProps;
+    idCurso: number;
+    idTipoDisciplina: number;
     sigla: string;
     descricao: string;
     periodo: number;
@@ -29,7 +29,7 @@ export type CreateDisciplinaOutputDto = {
     cargaHoraria: number;
 };
 
-export class CreateDisciplinaUseCase
+export class CreateDisciplinaUsecase
     implements Usecase<CreateDisciplinaInputDto, CreateDisciplinaOutputDto>
 {
     constructor(
@@ -38,12 +38,24 @@ export class CreateDisciplinaUseCase
         private readonly tipoDisciplinaGateway: TipoDisciplinaGateway
     ) {}
 
+    static create(
+        disciplinaGateway: DisciplinaGateway,
+        cursoGateway: CursoGateway,
+        tipoDisciplinaGateway: TipoDisciplinaGateway
+    ): CreateDisciplinaUsecase {
+        return new CreateDisciplinaUsecase(
+            disciplinaGateway,
+            cursoGateway,
+            tipoDisciplinaGateway
+        );
+    }
+
     async execute(
         input: CreateDisciplinaInputDto
     ): Promise<CreateDisciplinaOutputDto> {
-        const curso = await this.cursoGateway.findById(input.curso.idCurso!);
+        const curso = await this.cursoGateway.findById(input.idCurso!);
         const tipoDisciplina = await this.tipoDisciplinaGateway.findById(
-            input.tipoDisciplina.idTipoDisciplina!
+            input.idTipoDisciplina!
         );
 
         if (!curso) {

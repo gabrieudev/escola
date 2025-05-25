@@ -4,7 +4,7 @@ import {
     UpdateAlunoUsecase,
 } from "../../../../../usecases/aluno/update.usecase";
 import { HttpMethod, Route } from "../route";
-import { alunoSchema } from "../../schemas/aluno.schema";
+import { updateAlunoSchema } from "../../schemas/aluno/aluno.schema";
 
 export type UpdateAlunoResponseDto = {
     idAluno: number;
@@ -28,9 +28,12 @@ export class UpdateAlunoRoute implements Route {
         );
     }
 
-    public getHandler() {
+    public getHandler(): (
+        request: Request,
+        response: Response
+    ) => Promise<void> {
         return async (request: Request, response: Response) => {
-            alunoSchema.parse({
+            updateAlunoSchema.parse({
                 ...request.body,
                 dtNascimento: new Date(request.body.dtNascimento),
             });

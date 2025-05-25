@@ -18,6 +18,10 @@ export class UpdateTituloUsecase
 {
     constructor(private readonly tituloGateway: TituloGateway) {}
 
+    static create(tituloGateway: TituloGateway) {
+        return new UpdateTituloUsecase(tituloGateway);
+    }
+
     async execute(input: UpdateTituloInputDto): Promise<UpdateTituloOutputDto> {
         const titulo = await this.tituloGateway.findById(input.idTitulo);
 
