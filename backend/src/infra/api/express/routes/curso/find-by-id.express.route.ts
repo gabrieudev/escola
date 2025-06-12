@@ -25,7 +25,7 @@ export class FindByIdCursoRoute implements Route {
         findCursoByIdService: FindByIdCursoUsecase
     ): FindByIdCursoRoute {
         return new FindByIdCursoRoute(
-            "/instituicoes/:idInstituicao/cursos/:idCurso",
+            "/cursos/:idCurso",
             HttpMethod.GET,
             findCursoByIdService
         );

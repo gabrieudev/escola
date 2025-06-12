@@ -29,7 +29,7 @@ export class UpdateDisciplinaRoute implements Route {
         updateDisciplinaService: UpdateDisciplinaUsecase
     ): UpdateDisciplinaRoute {
         return new UpdateDisciplinaRoute(
-            "/cursos/:idCurso/disciplinas",
+            "/disciplinas",
             HttpMethod.PUT,
             updateDisciplinaService
         );

@@ -16,7 +16,7 @@ export class DeleteCursoRoute implements Route {
         deleteCursoService: DeleteCursoUsecase
     ): DeleteCursoRoute {
         return new DeleteCursoRoute(
-            "/instituicoes/:idInstituicao/cursos/:idCurso",
+            "/cursos/:idCurso",
             HttpMethod.DELETE,
             deleteCursoService
         );

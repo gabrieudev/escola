@@ -26,7 +26,7 @@ export class UpdateCursoRoute implements Route {
         updateCursoService: UpdateCursoUsecase
     ): UpdateCursoRoute {
         return new UpdateCursoRoute(
-            "/instituicoes/:idInstituicao/cursos",
+            "/cursos",
             HttpMethod.PUT,
             updateCursoService
         );
