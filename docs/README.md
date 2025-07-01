@@ -29,7 +29,7 @@
 │   │   ├── domain/                   # Camada de domínio
 │   │   ├── package/                  # Pacotes
 │   │   │   └── typeorm/              # Módulo do TypeORM
-│   │   ├── infra/                    # Infraestrutura
+│   │   ├── infra/                    # Camada de infraestrutura
 │   │   │   ├── api/                  # API
 │   │   │   │   └── express/          # Framework
 │   │   │   │       ├── entities/     # Entidades (TypeORM)
@@ -38,8 +38,8 @@
 │   │   │   │       └── middlewares/  # Middlewares
 │   │   │   └── repositories/         # Repositórios
 │   │   │       └── persistence/      # Banco de dados
-│   │   ├── usecases/                 # Casos de uso
-│   │   └── utils/                    # Arquivos reutilizáveis globalmente
+│   │   ├── usecases/                 # Camada de casos de uso
+│   │   └── utils/                    # Arquivos globalmente reutilizáveis
 │   └── Dockerfile                    # Dockerfile
 ├── docs/                             # Documentação do projeto
 ├── database/                         # Script de DDL
