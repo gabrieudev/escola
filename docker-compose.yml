@@ -1,0 +1,40 @@
+version: "3.8"
+
+services:
+    api:
+        container_name: api
+        build:
+            context: ./backend
+            dockerfile: Dockerfile
+        ports:
+            - "3000:3000"
+        depends_on:
+            - postgres
+        networks:
+            - escola
+
+    postgres:
+        container_name: database
+        image: postgres:16-alpine
+        volumes:
+            - ./database:/docker-entrypoint-initdb.d
+            - postgres_data:/var/lib/postgresql/data
+        environment:
+            POSTGRES_USER: admin
+            POSTGRES_PASSWORD: admin
+        ports:
+            - "5432:5432"
+        healthcheck:
+            test: ["CMD-SHELL", "pg_isready -U admin -d escola"]
+            interval: 5s
+            timeout: 5s
+            retries: 10
+        networks:
+            - escola
+
+volumes:
+    postgres_data:
+
+networks:
+    escola:
+        driver: bridge
