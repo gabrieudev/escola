@@ -63,6 +63,7 @@ import { UpdateTipoDisciplinaUsecase } from "./usecases/tipo_disciplina/update.u
 import { UpdateProfessorUsecase } from "./usecases/professor/update.usecase";
 import { FindAllProfessorUsecase } from "./usecases/professor/find-all.usecase";
 import { FindByIdProfessorUsecase } from "./usecases/professor/find-by-id.usecase";
+import { DisciplinaCursoUsecase } from "./usecases/curso/disciplinas-curso";
 
 // Rotas
 import { CreateAlunoRoute } from "./infra/api/express/routes/aluno/create.express.route";
@@ -111,6 +112,7 @@ import { UpdateProfessorRoute } from "./infra/api/express/routes/professor/updat
 import { FindAllProfessorRoute } from "./infra/api/express/routes/professor/find-all.express.route";
 import { FindByIdProfessorRoute } from "./infra/api/express/routes/professor/find-by-id.express.route";
 import { DeleteProfessorRoute } from "./infra/api/express/routes/professor/delete.express.route";
+import { DisciplinasCursoRoute } from "./infra/api/express/routes/curso/disciplinas-curso.express.route";
 
 function main() {
     // ==================== INICIALIZAÇÃO DE REPOSITÓRIOS ====================
@@ -259,6 +261,11 @@ function main() {
         professorRepository
     );
 
+    const disciplinaCursoUsecase = DisciplinaCursoUsecase.create(
+        cursoRepository,
+        disciplinaRepository
+    );
+
     // ==================== CONFIGURAÇÃO DE ROTAS ====================
 
     // Aluno
@@ -379,6 +386,10 @@ function main() {
     // Leciona
     const createLecionaRoute = CreateLecionaRoute.create(createLecionaUsecase);
 
+    const disciplinasCursoRoute = DisciplinasCursoRoute.create(
+        disciplinaCursoUsecase
+    );
+
     // ==================== INICIALIZAÇÃO DA API ====================
 
     const api = ApiExpress.create([
@@ -447,6 +458,9 @@ function main() {
 
         // Leciona
         createLecionaRoute,
+
+        // Disciplina Curso
+        disciplinasCursoRoute,
     ]);
     const port = Number(process.env.PORT) || 3000;
 
